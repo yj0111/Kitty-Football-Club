@@ -23,7 +23,7 @@ public class TeamCreateController {
 	
 	@Autowired
 	TeamService teamservice;
-	//테스트 주석
+	//테스트 주석2
 	@PostMapping("/create")
 	public ResponseEntity<Integer> signup(Team team ,HttpSession session) {
 		User user = (User) session.getAttribute("loginUser");
