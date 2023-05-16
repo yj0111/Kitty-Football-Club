@@ -6,7 +6,7 @@ import com.kfc.dto.User;
 
 public interface LoginService {
 
-	boolean login(User user, HttpServletRequest request);
+	User login(User user, HttpServletRequest request);
 
 	String getKakaoAccessToken (String code);
 

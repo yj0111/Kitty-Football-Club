@@ -27,7 +27,7 @@ public class LoginServiceImpl implements LoginService {
 	LoginDao loginDao;
 
 	@Override
-	public boolean login(User user, HttpServletRequest request) {
+	public User login(User user, HttpServletRequest request) {
 
 		User loginUser = loginDao.selectLogin(
 				user.getUser_id(),
@@ -37,9 +37,9 @@ public class LoginServiceImpl implements LoginService {
 		if(loginUser!=null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser",loginUser);
-			return true;
+			return loginUser;
 		}else {
-			return false;
+			return null;
 		}
 		
 	}

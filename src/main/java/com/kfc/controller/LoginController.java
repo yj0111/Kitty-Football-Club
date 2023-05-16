@@ -34,7 +34,7 @@ public class LoginController {
 	//일반 로그인
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody User user, HttpServletRequest request){
-		boolean isSuccess = loginService.login(user, request);
+		User isSuccess = loginService.login(user, request);
 
 		return new ResponseEntity<>(isSuccess, HttpStatus.ACCEPTED);
 	}
