@@ -1,6 +1,7 @@
 package com.kfc.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.kfc.dto.Team;
 public class TeamServiceImpl implements TeamService {
 	@Autowired
 	TeamDao teamDao;
+	
 	@Override
 	public int creatTeam(Team team, int id) {
 		int result = teamDao.createTeam(team);
@@ -23,10 +25,12 @@ public class TeamServiceImpl implements TeamService {
 		}else {
 			return 0;
 		}
-		
-	
-		
 		return userResult;
+	}
+	
+	@Override
+	public List<Team> searchList(String word) {
+		return teamDao.searchList(word);
 	}
 
 }

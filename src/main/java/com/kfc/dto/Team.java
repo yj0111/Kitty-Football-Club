@@ -8,7 +8,34 @@ public class Team {
 	private String team_announcement; //팀 공고
 	private String team_birth; //팀 개설일 
 	private String team_status; //팀 상태
+	private int team_win; //팀 승리 횟수
+	private int team_lose;//팀 진 횟수
+	private int team_draw;//팀 무승부 횟수
 	
+	public int getTeam_win() {
+		return team_win;
+	}
+
+	public void setTeam_win(int team_win) {
+		this.team_win = team_win;
+	}
+
+	public int getTeam_lose() {
+		return team_lose;
+	}
+
+	public void setTeam_lose(int team_lose) {
+		this.team_lose = team_lose;
+	}
+
+	public int getTeam_draw() {
+		return team_draw;
+	}
+
+	public void setTeam_draw(int team_draw) {
+		this.team_draw = team_draw;
+	}
+
 	public Team() {
 	}
 

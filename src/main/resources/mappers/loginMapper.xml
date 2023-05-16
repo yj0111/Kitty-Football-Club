@@ -20,7 +20,7 @@
     </select>
     
     <insert id="signUp" parameterType="User">
-		INSERT INTO user ( `user_id`, `user_password`, `user_name`, `user_phone`, `user_email`, `user_address`, `user_gender`, `user_birth`,`user_kakao_id`, `user_naver_id`,`user_pic`) 
-		VALUES ( #{user_id}, #{user_password}, #{user_name}, #{user_phone}, #{user_email}, #{user_address}, #{user_gender}, #{user_birth},#{user_kakao_id},#{user_naver_id},#{user_pic});
+		INSERT INTO user ( `user_id`, `user_password`, `user_name`, `user_phone`, `user_email`, `user_address`, `user_gender`, `user_birth`,`user_kakao_id`, `user_naver_id`,`user_pic`,`user_position`) 
+		VALUES ( #{user_id}, #{user_password}, #{user_name}, #{user_phone}, #{user_email}, #{user_address}, #{user_gender}, #{user_birth},#{user_kakao_id},#{user_naver_id},#{user_pic},#{user_position});
 	</insert>
 </mapper>

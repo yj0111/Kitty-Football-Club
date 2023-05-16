@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kfc.dao.TeamManageDao">
+    <select id="searchMemberList" parameterType="int" resultType="User">
+		SELECT * FROM user
+		WHERE team_id = #{id};
+    </select>
+    
+   	<update id="kickOutUser" parameterType="int">
+		UPDATE user
+		SET team_id = null,
+		user_team_join_date = null,
+		user_team_authority = null
+		WHERE id = #{id};
+	</update>
+</mapper>

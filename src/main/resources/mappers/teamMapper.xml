@@ -20,4 +20,13 @@
 		select * from team
 		ORDER BY team_id DESC LIMIT 1;
     </select>
+    
+       <select id="searchList" parameterType="String" resultType="Team">
+		SELECT * FROM TEAM
+		WHERE TEAM_STATUS = 1
+		<if test="word != 'none'">
+		AND team_name LIKE concat('%', #{word}, '%')
+		</if>
+		ORDER BY team_birth desc;
+  	  </select>
 </mapper>

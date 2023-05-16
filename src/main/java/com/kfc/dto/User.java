@@ -16,9 +16,19 @@ public class User {
 	private String user_pic; //프로필 사진
 	private String user_join_date; // 가입일자
 	private String user_team_join_date; //팀가입일자
+	private String user_team_authority; //팀에서 등급
+	private String user_position; //주 포지션
 	
 	public User() { //기본생성자
 
+	}
+
+	public String getUser_position() {
+		return user_position;
+	}
+
+	public void setUser_position(String user_position) {
+		this.user_position = user_position;
 	}
 
 	public int getId() {
@@ -168,6 +178,14 @@ public class User {
 				+ ", user_phone=" + user_phone + ", user_email=" + user_email + ", user_address=" + user_address
 				+ ", user_gender=" + user_gender + ", user_birth=" + user_birth + ", user_pic=" + user_pic
 				+ ", user_join_date=" + user_join_date + ", user_team_join_date=" + user_team_join_date + "]";
+	}
+
+	public String getUser_team_authority() {
+		return user_team_authority;
+	}
+
+	public void setUser_team_authority(String user_team_authority) {
+		this.user_team_authority = user_team_authority;
 	}
 	
 }
