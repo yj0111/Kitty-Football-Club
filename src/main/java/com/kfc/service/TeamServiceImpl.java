@@ -15,12 +15,18 @@ public class TeamServiceImpl implements TeamService {
 	TeamDao teamDao;
 	@Override
 	public int creatTeam(Team team, int id) {
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("team", team);
-		paramMap.put("id", id);
-		teamDao.updateUserTeam(paramMap);
+		int result = teamDao.createTeam(team);
+		int userResult = 0;
+		if(result == 1) {
+			Team tm = teamDao.selectTeamInfo();
+			userResult = teamDao.UserUpdate(tm.getTeam_id(), tm.getTeam_birth(), id);
+		}else {
+			return 0;
+		}
 		
-		return teamDao.createTeam(team);
+	
+		
+		return userResult;
 	}
 
 }

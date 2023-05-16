@@ -8,6 +8,10 @@ public interface TeamDao {
 
 	int createTeam(Team team);
 
-	void updateUserTeam(Map<String, Object> paramMap);
+	Team selectTeamInfo();
+
+	int UserUpdate(int team_id, String team_birth, int id);
+
+	
 
 }
