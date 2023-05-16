@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kfc.dao.TeamManageDao;
+import com.kfc.dto.Team;
 import com.kfc.dto.User;
 @Service
 public class MyTeamManageServiceImpl implements MyTeamManageService {
@@ -18,6 +19,10 @@ public class MyTeamManageServiceImpl implements MyTeamManageService {
 	@Override
 	public int kickOutUser(int id) {
 		return teamManageDao.kickOutUser(id);
+	}
+	@Override
+	public int modifyTeam(Team team) {
+		return teamManageDao.modifyTeam(team);
 	}
 
 }

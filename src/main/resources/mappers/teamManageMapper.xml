@@ -15,4 +15,12 @@
 		user_team_authority = null
 		WHERE id = #{id};
 	</update>
+	
+   	<update id="modifyTeam" parameterType="Team">
+		UPDATE team
+		SET team_logo = #{team_logo},
+		team_content = #{team_content},
+		team_announcement = #{team_announcement}
+		WHERE team_id = #{team_id};
+	</update>
 </mapper>
