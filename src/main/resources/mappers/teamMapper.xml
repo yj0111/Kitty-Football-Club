@@ -29,4 +29,27 @@
 		</if>
 		ORDER BY team_birth desc;
   	  </select>
+  	  
+  	   <!-- 10위 까지 전체 팀 랭킹 -->
+  	  <select id="teamRanking" resultType="Team">
+  		SELECT ranking, team_name, score,team_win, team_draw, team_lose
+		FROM (SELECT RANK() OVER (ORDER BY score DESC) AS ranking, score, team_name, team_win, team_draw, team_lose
+ 		FROM (SELECT (team_win * 3 + team_draw + team_lose * (-3)) AS score, team_name, team_win, team_draw, team_lose
+    	FROM team
+  		) subquery 
+		) t; 
+  	  </select>
+  	  
+  	    <!-- 우리팀 랭킹, 전적 -->
+  	    <select id="MyteamRank" parameterType="int" resultType="Team" >
+  		SELECT ranking, team_name, score,team_win, team_draw, team_lose,team_id
+		FROM (
+			SELECT RANK() OVER (ORDER BY score DESC) AS ranking, score, team_name, team_win, team_draw, team_lose,team_id
+			FROM (
+            SELECT (team_win * 3 + team_draw + team_lose * (-3)) AS score, team_name, team_win, team_draw, team_lose , team_id
+			FROM team
+			) subquery 
+			) t
+            where team_id =  #{team_id}
+  	  </select>
 </mapper>

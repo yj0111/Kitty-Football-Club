@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,6 +47,28 @@ public class TeamController {
 		List<Team> list = teamservice.searchList(word);
 		if(list == null || list.size() == 0)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<List<Team>>(list, HttpStatus.OK);
+	}
+	
+	//랭킹 가져오기
+	@GetMapping("/teamrank")
+	public ResponseEntity<?> teamRanking(){
+		List<Team> list = teamservice.teamRanking();
+		if(list == null) {
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Team>>(list, HttpStatus.OK);
+	}
+	
+	//우리팀 랭킹, 승 패 무 가져오기
+	@GetMapping("/myteamRank")
+	public ResponseEntity<?> MyteamRank(HttpSession session){
+		User user = (User) session.getAttribute("loginUser");
+		int id = user.getTeam_id();
+		List<Team> list = teamservice.MyteamRank(id);
+		if(list == null) {
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		}
 		return new ResponseEntity<List<Team>>(list, HttpStatus.OK);
 	}
 }

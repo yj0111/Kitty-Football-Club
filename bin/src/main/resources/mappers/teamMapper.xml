@@ -3,14 +3,30 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kfc.dao.TeamDao">
-	<update id="updateUserTeam" parameterType="HashMap">
-		UPDATE board
-		SET view_cnt = view_cnt+1
-		WHERE id = #{id}
+	<update id="UserUpdate" parameterType="HashMap">
+		UPDATE user
+		SET team_id = #{team_id},
+		user_team_join_date = #{team_birth},
+		user_team_authority = "운영자"
+		WHERE id = #{id};
 	</update>
     
     <insert id="createTeam" parameterType="Team">
 		INSERT INTO `team` ( `team_name`, `team_logo`, `team_content`, `team_announcement`) 
 		VALUES ( #{team_name}, #{team_logo}, #{team_content}, #{team_announcement});
 	</insert>
+	
+    <select id="selectTeamInfo" parameterType="Team" resultType="Team">
+		select * from team
+		ORDER BY team_id DESC LIMIT 1;
+    </select>
+    
+       <select id="searchList" parameterType="String" resultType="Team">
+		SELECT * FROM TEAM
+		WHERE TEAM_STATUS = 1
+		<if test="word != 'none'">
+		AND team_name LIKE concat('%', #{word}, '%')
+		</if>
+		ORDER BY team_birth desc;
+  	  </select>
 </mapper>

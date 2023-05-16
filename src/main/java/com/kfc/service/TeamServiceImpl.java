@@ -14,23 +14,32 @@ import com.kfc.dto.Team;
 public class TeamServiceImpl implements TeamService {
 	@Autowired
 	TeamDao teamDao;
-	
+
 	@Override
 	public int creatTeam(Team team, int id) {
 		int result = teamDao.createTeam(team);
 		int userResult = 0;
-		if(result == 1) {
+		if (result == 1) {
 			Team tm = teamDao.selectTeamInfo();
 			userResult = teamDao.UserUpdate(tm.getTeam_id(), tm.getTeam_birth(), id);
-		}else {
+		} else {
 			return 0;
 		}
 		return userResult;
 	}
-	
+
 	@Override
 	public List<Team> searchList(String word) {
 		return teamDao.searchList(word);
 	}
 
+	@Override
+	public List<Team> teamRanking() {
+		return teamDao.teamRanking();
+	}
+	
+	@Override
+	public List<Team> MyteamRank(int id) {
+		return teamDao.MyteamRank(id);
+	}
 }
