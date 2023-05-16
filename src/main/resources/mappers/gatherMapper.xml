@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kfc.dao.GatherDao">
+	<insert id="gather" parameterType="Gather">
+		INSERT INTO `gather` (`gather_id`, `stadium_id`, `team_id`, `gather_announcement`) 
+			VALUES (#{gather_id}, #{stadium_id}, #{team_id}, #{gather_announcement});
+	</insert>
+</mapper>

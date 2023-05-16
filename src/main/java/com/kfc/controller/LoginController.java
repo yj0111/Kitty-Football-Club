@@ -109,6 +109,7 @@ public class LoginController {
 		
 		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
 	}
+	
 	//로그아웃
 	@GetMapping("logout")
 	public ResponseEntity<Void> logout(HttpSession session) {

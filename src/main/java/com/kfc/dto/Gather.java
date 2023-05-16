@@ -5,9 +5,21 @@ public class Gather {
 	private int stadium_id; //경기장 아이디
 	private int team_id; //팀 아이디
 	private String gather_date; //모집 날짜
+	private String gather_announcement; //모집 글
 	
 	public Gather() {
 	}
+
+	
+	public String getGather_announcement() {
+		return gather_announcement;
+	}
+
+
+	public void setGather_announcement(String gather_announcement) {
+		this.gather_announcement = gather_announcement;
+	}
+
 
 	public int getGather_id() {
 		return gather_id;
@@ -41,18 +53,24 @@ public class Gather {
 		this.gather_date = gather_date;
 	}
 
-	public Gather(int gather_id, int stadium_id, int team_id, String gather_date) {
+
+	public Gather(int gather_id, int stadium_id, int team_id, String gather_date, String gather_announcement) {
+		super();
 		this.gather_id = gather_id;
 		this.stadium_id = stadium_id;
 		this.team_id = team_id;
 		this.gather_date = gather_date;
+		this.gather_announcement = gather_announcement;
 	}
+
 
 	@Override
 	public String toString() {
 		return "Gather [gather_id=" + gather_id + ", stadium_id=" + stadium_id + ", team_id=" + team_id
-				+ ", gather_date=" + gather_date + "]";
+				+ ", gather_date=" + gather_date + ", gather_announcement=" + gather_announcement + "]";
 	}
+
+
 	
 	
 }
