@@ -42,7 +42,7 @@
   	  
   	    <!-- 우리팀 랭킹, 전적 -->
   	    <select id="MyteamRank" parameterType="int" resultType="Team" >
-  		SELECT ranking, team_name, score,team_win, team_draw, team_lose,team_id
+  		SELECT ranking, team_name, score,team_win, team_draw, team_lose,team_id,team_logo
 		FROM (
 			SELECT RANK() OVER (ORDER BY score DESC) AS ranking, score, team_name, team_win, team_draw, team_lose,team_id
 			FROM (

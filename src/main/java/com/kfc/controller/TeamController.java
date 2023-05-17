@@ -50,7 +50,7 @@ public class TeamController {
 		return new ResponseEntity<List<Team>>(list, HttpStatus.OK);
 	}
 	
-	//랭킹 가져오기
+	//메인페이지 랭킹 가져오기
 	@GetMapping("/teamrank")
 	public ResponseEntity<?> teamRanking(){
 		List<Team> list = teamservice.teamRanking();
