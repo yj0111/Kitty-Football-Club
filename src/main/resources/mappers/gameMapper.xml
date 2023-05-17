@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kfc.dao.GameDao">
+	<!-- 상대가 있는지 상태 알아보기 -->
+	<select id = "findstatus" parameterType="Gather" resultType="Gather">
+		SELECT * FROM game g
+		JOIN gather gd ON g.game_team1 = gather_id
+		WHERE game_status = 0
+		and game_date = #{gather_date}
+		and stadium_id = #{stadium_id};
+	</select>
+
+	<!-- 게임 확정팀 1-->
+	<insert id="makeGame" parameterType="Game">
+	   INSERT INTO `kfc`.`game` (`game_team1`, `game_date`) 
+            VALUES (#{game_team1}, #{game_date});
+	</insert>
+	
+	<!-- 게임 확정팀 2-->
+	<update id="matchGame" parameterType="Gather">
+		UPDATE game
+		SET game_team2 = #{gather_id}, 
+		game_status = 1 
+		WHERE game_id = #{game_id}
+	</update>
+</mapper>
