@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kfc.dao.PlayerDao">
+	<!-- 모집 공고에 참여 신청 -->
+    <insert id="applyGame" parameterType="Player">
+	INSERT INTO player(`gather_id`, `id`)
+		VALUES (#{gather_id}, #{id});                           
+	</insert>
+	
+	<!-- 참여 인원 수 -->
+	<select id="playerCnt" parameterType="int" resultType="int">
+	SELECT count(*)
+	FROM 
+	player
+	WHERE gather_id = #{gather_id};
+	</select>
+
+</mapper>
