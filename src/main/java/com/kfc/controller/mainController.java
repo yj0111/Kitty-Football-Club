@@ -26,52 +26,5 @@ import io.swagger.annotations.Api;
 @RequestMapping("/main")
 @Api(tags = "메인 컨트롤러")
 public class mainController {
-	@Autowired
-	MainService mainService;
-	@Autowired
-	TeamService teamservice;
-	//팀생성
-	@PostMapping("/create")
-	public ResponseEntity<Integer> signup(Team team ,HttpSession session) {
-		User user = (User) session.getAttribute("loginUser");
-		int id = user.getId();
-		int result = teamservice.creatTeam(team, id);
-		
-		
-		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
-	}
-	
-	//팀 목록 가져오기
-	@GetMapping("/list")
-	public ResponseEntity<?> teamlist(@RequestParam(required = false) String word){
-		if(word == null) {
-			word ="none";
-		}
-		List<Team> list = teamservice.searchList(word);
-		if(list == null || list.size() == 0)
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		return new ResponseEntity<List<Team>>(list, HttpStatus.OK);
-	}
-	
-	//랭킹 가져오기
-	@GetMapping("/teamrank")
-	public ResponseEntity<?> teamRanking(){
-		List<Team> list = teamservice.teamRanking();
-		if(list == null) {
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<List<Team>>(list, HttpStatus.OK);
-	}
-	
-	//우리팀 랭킹, 승 패 무 가져오기
-	@GetMapping("/myteamRank")
-	public ResponseEntity<?> MyteamRank(HttpSession session){
-		User user = (User) session.getAttribute("loginUser");
-		int id = user.getTeam_id();
-		List<Team> list = teamservice.MyteamRank(id);
-		if(list == null) {
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<List<Team>>(list, HttpStatus.OK);
-	}
+
 }
