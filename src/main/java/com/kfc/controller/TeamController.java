@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kfc.dto.Game;
 import com.kfc.dto.Team;
 import com.kfc.dto.User;
 import com.kfc.service.TeamService;
@@ -71,5 +73,41 @@ public class TeamController {
 		}
 		return new ResponseEntity<List<Team>>(list, HttpStatus.OK);
 	}
-
+	//우리팀의 최근 경기 결고 2개 가져오기
+	@GetMapping("/myteamRecord")
+	public ResponseEntity<?> myteamRecord(HttpSession session){
+		User user = (User) session.getAttribute("loginUser");
+		int id = user.getTeam_id();
+		List<Game> list = teamservice.myteamRecord(id);
+		if(list == null) {
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Game>>(list, HttpStatus.OK);
+	}
+	
+	//경기 종료 후 경기 정보 넣기 및 플레이어 골 넣기
+	//먼저 내 팀 경기목록 가져오기
+	@GetMapping("/myteamGameList")
+	public ResponseEntity<?> myteamGameList(HttpSession session){
+		User user = (User) session.getAttribute("loginUser");
+		int id = user.getTeam_id();
+		List<Game> list = teamservice.myteamGameList(id);
+		if(list == null) {
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Game>>(list, HttpStatus.OK);
+	}
+	//경기 종료 후 game에 득점 수 넣고 해당 team 승 무 패  추가하고 player에 골 추가하기
+	//game에 game_id , team1_id , team2_id , team1_score, team2_score
+	@PutMapping("/teamRecording") 
+	public ResponseEntity<?> teamRecording(@RequestBody Game game){
+		//로그인한 사용자가 속한 팀이면서 로그인한 사용자가 운영자 일 때만 추방 가능
+		//game테이블에 승 패 기록
+		int result = teamservice.gameRecording(game);
+		if(result != 1) {
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		}
+		
+		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
+	}
 }

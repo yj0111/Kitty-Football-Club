@@ -3,6 +3,7 @@ package com.kfc.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.kfc.dto.Game;
 import com.kfc.dto.Team;
 
 public interface TeamDao {
@@ -18,4 +19,14 @@ public interface TeamDao {
 	List<Team> teamRanking();
 
 	List<Team> MyteamRank(int id); // 우리팀 랭킹, 승 패 무 
+
+	List<Game> myteamGameList(int id);
+
+	int gameRecording(Game game);
+
+	int teamRecording1(int team1_id, int team1);
+
+	int teamRecording2(int team2_id, int team1);
+
+	List<Game> myteamRecord(int id);
 }

@@ -13,9 +13,30 @@ public class Game {
     private String team2_name; //팀2이름
     private String team1_logo; //팀1이름
     private String team2_logo; //팀2이름
+    private int team1_id; //팀1id
+    private int team2_id; //팀2id
     
     
-    public String getTeam1_logo() {
+
+
+
+	public int getTeam1_id() {
+		return team1_id;
+	}
+
+	public void setTeam1_id(int team1_id) {
+		this.team1_id = team1_id;
+	}
+
+	public int getTeam2_id() {
+		return team2_id;
+	}
+
+	public void setTeam2_id(int team2_id) {
+		this.team2_id = team2_id;
+	}
+
+	public String getTeam1_logo() {
         return team1_logo;
     }
 
