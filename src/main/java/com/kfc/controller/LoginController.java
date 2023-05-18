@@ -1,5 +1,6 @@
 package com.kfc.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -9,13 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kfc.dto.User;
 import com.kfc.service.LoginService;
@@ -30,6 +35,8 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 public class LoginController {
 	@Autowired
 	LoginService loginService; 
+	@Autowired
+	ResourceLoader resLoader;
 	
 	//일반 로그인
 	@PostMapping("/login")
@@ -68,7 +75,7 @@ public class LoginController {
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		}
 	}
-	
+
 	//네이버 로그인
 	@GetMapping("/naverLogin")
 	public  void naverConnect(HttpServletResponse response) throws IOException {
@@ -102,13 +109,40 @@ public class LoginController {
 			return new ResponseEntity<>(id, HttpStatus.OK);
 		}
 	}
+	
 	//회원 가입
+	
+	@Value("${upload.path}")
+	private String uploadPath;
 	@PostMapping("/signup")
-	public ResponseEntity<Integer> signup(User user) {
-		int result = loginService.signUp(user);
+	 public ResponseEntity<Integer> signup(User user ,@RequestPart(required = false) MultipartFile file) throws IllegalStateException, IOException {
 		
-		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
-	}
+		
+		// 만약에 등록하려고 하는 upload 폴더가 없을 수도 있다.
+		File folder = new File(uploadPath);
+		if (!folder.exists())
+			folder.mkdir(); // 폴더 없으면 만들어
+		
+        if (file != null && file.getSize() > 0) {
+            // 파일을 저장할 위치 지정
+      //      Resource res = resLoader.getResource("classpath:/static/upload");
+ 
+         
+         
+            // 중복방지를 위해 파일 이름앞에 현재 시간 추가
+            String filename = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            String filePath = uploadPath + File.separator + filename; // 파일 경로
+
+            // 파일 저장
+            file.transferTo(new File(filePath));
+            user.setUser_pic(filename);
+
+        }
+        // DB에 user 정보 등록
+        int result = loginService.signUp(user);
+        
+        return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
+    }
 	
 	//로그아웃
 	@GetMapping("logout")

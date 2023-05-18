@@ -1,10 +1,13 @@
 package com.kfc.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +16,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kfc.dto.Game;
 import com.kfc.dto.Team;
@@ -31,10 +36,34 @@ public class TeamController {
 	@Autowired
 	TeamService teamservice;
 	//팀생성
+	@Value("${upload.path}")
+	private String uploadPath;
 	@PostMapping("/create")
-	public ResponseEntity<Integer> signup(Team team ,HttpSession session) {
+	public ResponseEntity<Integer> signup(Team team ,HttpSession session,@RequestPart(required = false) MultipartFile file) throws IllegalStateException, IOException {
 		User user = (User) session.getAttribute("loginUser");
 		int id = user.getId();
+		// 만약에 등록하려고 하는 upload 폴더가 없을 수도 있다.
+		File folder = new File(uploadPath);
+		if (!folder.exists())
+			folder.mkdir(); // 폴더 없으면 만들어
+		
+        if (file != null && file.getSize() > 0) {
+            // 파일을 저장할 위치 지정
+      //      Resource res = resLoader.getResource("classpath:/static/upload");
+ 
+         
+         
+            // 중복방지를 위해 파일 이름앞에 현재 시간 추가
+            String filename = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            String filePath = uploadPath + File.separator + filename; // 파일 경로
+
+            // 파일 저장
+            file.transferTo(new File(filePath));
+            team.setTeam_logo(filename);
+        }
+		
+		
+		
 		int result = teamservice.creatTeam(team, id);
 		
 		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
