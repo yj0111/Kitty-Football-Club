@@ -1,14 +1,18 @@
 package com.kfc.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kfc.dto.Team;
+import com.kfc.dto.User;
 import com.kfc.service.TeamDetailService;
 
 import io.swagger.annotations.Api;
@@ -29,5 +33,19 @@ public class TeamDetailController {
 			return new ResponseEntity<Team>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<Team>(team,HttpStatus.OK);
+	}
+	
+	@PostMapping("/join/{team_id}")
+	public ResponseEntity<Integer> JoinTeam(@PathVariable int team_id,HttpSession session){
+		User user = (User) session.getAttribute("loginUser");
+		Team jointeam = new Team();
+		//Team team = detailService.teamDetail(team_id);
+		//System.out.println("지금 공고 보고있는 팀 정보 "+ team.toString());
+		System.out.println("=======================================");
+		jointeam.setId(user.getId());
+		jointeam.setTeam_id(team_id);
+		System.out.println("내가 등록하고 잇는거 "+ jointeam);
+		int result = detailService.JoinTeam(jointeam);
+		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
 	}
 }

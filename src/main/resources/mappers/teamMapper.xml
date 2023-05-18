@@ -3,6 +3,19 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kfc.dao.TeamDao">
+	<!-- 팀 생성 -->
+    <insert id="createTeam" parameterType="Team">
+		INSERT INTO `team` ( `team_name`, `team_logo`, `team_content`, `team_announcement`) 
+		VALUES ( #{team_name}, #{team_logo}, #{team_content}, #{team_announcement});
+	</insert>
+	
+	<!-- 최근에 만들어진 팀 1개 -->
+    <select id="selectTeamInfo" parameterType="Team" resultType="Team">
+		select * from team
+		ORDER BY team_id DESC LIMIT 1;
+    </select>
+    
+	<!-- 팀 생성했을때 -->
 	<update id="UserUpdate" parameterType="HashMap">
 		UPDATE user
 		SET team_id = #{team_id},
@@ -10,18 +23,9 @@
 		user_team_authority = "운영자"
 		WHERE id = #{id};
 	</update>
-    
-    <insert id="createTeam" parameterType="Team">
-		INSERT INTO `team` ( `team_name`, `team_logo`, `team_content`, `team_announcement`) 
-		VALUES ( #{team_name}, #{team_logo}, #{team_content}, #{team_announcement});
-	</insert>
-	
-    <select id="selectTeamInfo" parameterType="Team" resultType="Team">
-		select * from team
-		ORDER BY team_id DESC LIMIT 1;
-    </select>
-    
-       <select id="searchList" parameterType="String" resultType="Team">
+
+	<!-- 팀 검색 -->	
+     <select id="searchList" parameterType="String" resultType="Team">
 		SELECT * FROM TEAM
 		WHERE TEAM_STATUS = 1
 		<if test="word != 'none'">
@@ -44,12 +48,12 @@
   	    <select id="MyteamRank" parameterType="int" resultType="Team" >
   		SELECT ranking, team_name, score,team_win, team_draw, team_lose,team_id,team_logo
 		FROM (
-			SELECT RANK() OVER (ORDER BY score DESC) AS ranking, score, team_name, team_win, team_draw, team_lose,team_id
+			SELECT RANK() OVER (ORDER BY score DESC) AS ranking, score, team_name, team_win, team_draw, team_lose,team_id,team_logo
 			FROM (
-            SELECT (team_win * 3 + team_draw + team_lose * (-3)) AS score, team_name, team_win, team_draw, team_lose , team_id
+            SELECT (team_win * 3 + team_draw + team_lose * (-3)) AS score, team_name, team_win, team_draw, team_lose , team_id,team_logo
 			FROM team
 			) subquery 
 			) t
-            where team_id =  #{team_id}
+            where team_id = #{team_id}
   	  </select>
 </mapper>

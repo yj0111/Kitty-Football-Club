@@ -15,8 +15,18 @@ public class Team {
 	private String user_name; //대표 이름
 	private int total_cnt; //팀원수 
 	private int ranking; // 등수
-
 	
+	private int id;
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getUser_name() {
 		return user_name;
 	}

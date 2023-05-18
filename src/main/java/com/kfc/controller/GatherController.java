@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kfc.dto.Gather;
 import com.kfc.dto.User;
 import com.kfc.service.GatherService;
+import com.kfc.service.PlayerService;
 
 import io.swagger.annotations.Api;
 
@@ -28,14 +29,16 @@ public class GatherController {
 	@Autowired
 	GatherService gatherService;
 
+	@Autowired
+	PlayerService playerService;
+	
 	// 모집 공고 만들기
 	@PostMapping("/make")
-//	int gather(Gather gather);/
 	public ResponseEntity<Integer> gather(Gather gather, HttpSession session) {
 		User user = (User) session.getAttribute("loginUser");
 		int team_id = user.getTeam_id();
 		gather.setTeam_id(team_id);
-		int result = gatherService.gather(gather);
+		int result = gatherService.gather(gather,session);
 		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
 	}
 

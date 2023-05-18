@@ -71,5 +71,5 @@ public class TeamController {
 		}
 		return new ResponseEntity<List<Team>>(list, HttpStatus.OK);
 	}
-
+	
 }

@@ -9,7 +9,13 @@
 			VALUES (#{gather_id}, #{stadium_id}, #{team_id},#{gather_date},#{gather_announcement});
 	</insert>
 	
-	
+	<!-- 제일 최근에 만든 일정  -->
+	<select id="selectGatherInfo" resultType="int">
+		select gather_id
+        from gather
+		ORDER BY gather_id DESC LIMIT 1;
+	</select>
+		
 	<select id="gatherList" parameterType="Gather" resultType="Gather" >
 	SELECT s.stadium_name, g.gather_date, COUNT(*) AS player_cnt
 	FROM gather g

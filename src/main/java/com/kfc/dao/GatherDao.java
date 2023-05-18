@@ -10,4 +10,6 @@ public interface GatherDao {
 	List<Gather> gatherList(Gather gather);
 	
 	Gather gatherOne(int gather_id);
+	
+	int selectGatherInfo();
 }

@@ -15,4 +15,9 @@ public class TeamDetailServiceImpl implements TeamDetailService{
 	public Team teamDetail(int team_id) {
 		return teamDetailDao.teamDetail(team_id);
 	}
+	
+	@Override
+	public int JoinTeam(Team team) {
+		return teamDetailDao.JoinTeam(team);
+	}
 }
