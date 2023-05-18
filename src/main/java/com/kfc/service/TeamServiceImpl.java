@@ -1,8 +1,6 @@
 package com.kfc.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +43,7 @@ public class TeamServiceImpl implements TeamService {
 		return teamDao.MyteamRank(id);
 	}
 
+<<<<<<< HEAD
 	@Override
 	public List<Game> myteamGameList(int id) {
 		return teamDao.myteamGameList(id);
@@ -83,4 +82,6 @@ public class TeamServiceImpl implements TeamService {
 	public List<Game> myteamRecord(int id) {
 		return teamDao.myteamRecord(id);
 	}
+=======
+>>>>>>> 8787ccbed778609ac1bca05a959f4030e6f4e4f0
 }

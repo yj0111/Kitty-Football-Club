@@ -73,6 +73,7 @@ public class TeamController {
 		}
 		return new ResponseEntity<List<Team>>(list, HttpStatus.OK);
 	}
+<<<<<<< HEAD
 	//우리팀의 최근 경기 결고 2개 가져오기
 	@GetMapping("/myteamRecord")
 	public ResponseEntity<?> myteamRecord(HttpSession session){
@@ -110,4 +111,7 @@ public class TeamController {
 		
 		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
 	}
+=======
+	
+>>>>>>> 8787ccbed778609ac1bca05a959f4030e6f4e4f0
 }
