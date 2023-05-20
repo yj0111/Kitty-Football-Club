@@ -12,4 +12,6 @@ public interface LoginDao {
 
 	int signUp(User user);
 
+	User findByUsername(String username);
+
 }

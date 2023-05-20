@@ -32,7 +32,11 @@ public class WebConfig implements WebMvcConfigurer {
 	//전역설정처럼 여기서 한방에 처리할 수도 있음.. 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**").allowedOrigins("*");//.allowedMethods("GET", "POST");
+		//registry.addMapping("/**").allowedOrigins("*");//.allowedMethods("GET", "POST");
+		 registry.addMapping("/**")
+	        .allowedOriginPatterns("*")
+	        .allowedMethods("*")
+	        .allowCredentials(true);
 	}
 	
 	

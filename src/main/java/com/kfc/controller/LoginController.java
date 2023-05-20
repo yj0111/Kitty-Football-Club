@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +31,6 @@ import com.kfc.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
-
 @RestController
 @RequestMapping("/kfc")
 @Api(tags = "로그인 컨트롤러")
@@ -37,12 +39,19 @@ public class LoginController {
 	LoginService loginService; 
 	@Autowired
 	ResourceLoader resLoader;
-	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	//일반 로그인
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody User user, HttpServletRequest request){
+	public ResponseEntity<?> login(@RequestBody User user, HttpServletRequest request,HttpServletResponse response){
 		User isSuccess = loginService.login(user, request);
-
+		
+		HttpSession session = request.getSession();
+		System.out.println("ewe"+ session.getAttribute("loginUser"));
+		String sessionId = session.getId();
+		Cookie cookie = new Cookie("JSESSIONID",sessionId);
+		cookie.setPath("/");
+		response.addCookie(cookie);
 		return new ResponseEntity<>(isSuccess, HttpStatus.ACCEPTED);
 	}
 	//카카오 로그인
@@ -138,6 +147,10 @@ public class LoginController {
             user.setUser_pic(filename);
 
         }
+        
+        //암호화 하기
+        String encpassword = bCryptPasswordEncoder.encode(user.getUser_password()) ;
+        user.setUser_password(encpassword);
         // DB에 user 정보 등록
         int result = loginService.signUp(user);
         

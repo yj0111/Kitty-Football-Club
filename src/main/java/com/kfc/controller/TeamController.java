@@ -41,6 +41,7 @@ public class TeamController {
 	@PostMapping("/create")
 	public ResponseEntity<Integer> signup(Team team ,HttpSession session,@RequestPart(required = false) MultipartFile file) throws IllegalStateException, IOException {
 		User user = (User) session.getAttribute("loginUser");
+		System.out.println("uuuuu"+user);
 		int id = user.getId();
 		// 만약에 등록하려고 하는 upload 폴더가 없을 수도 있다.
 		File folder = new File(uploadPath);
