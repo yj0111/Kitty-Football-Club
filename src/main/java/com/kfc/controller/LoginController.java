@@ -41,7 +41,7 @@ public class LoginController {
 	ResourceLoader resLoader;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	//일반 로그인
+	//일반 로그인 하하
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody User user, HttpServletRequest request,HttpServletResponse response){
 		User isSuccess = loginService.login(user, request);
