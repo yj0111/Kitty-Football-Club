@@ -21,7 +21,7 @@
 
 	<select id="gatherList" parameterType="Gather"
 		resultType="Gather">
-		SELECT s.stadium_name, g.gather_date AS gather_date, COUNT(*) AS player_cnt, gather_announcement
+		SELECT s.stadium_name, g.gather_date AS gather_date, COUNT(*) AS player_cnt, gather_announcement,g.gather_id
 		FROM gather g
 		JOIN stadium s ON g.stadium_id = s.stadium_id
 		JOIN player p ON p.gather_id = g.gather_id
@@ -34,8 +34,7 @@
 		SELECT *
 		FROM gather g
 		inner join stadium s on g.stadium_id = s.stadium_id
-		WHERE gather_id =
-		#{gather_id}
+		WHERE gather_id =#{gather_id}
 	</select>
 
 </mapper>

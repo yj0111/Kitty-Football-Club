@@ -31,11 +31,11 @@ public class myTeamManageController {
 	@Autowired
 	MyTeamManageService myTeamManageService; 
 	//멤버 리스트 가져오기
-	@GetMapping("/list")
-	public ResponseEntity<?> memberList(HttpSession session){
-		User user = (User) session.getAttribute("loginUser");
-		int id =user.getTeam_id();
+	@GetMapping("/list/{id}")
+	public ResponseEntity<?> memberList(@PathVariable int id){
 		List<User> list = myTeamManageService.searchMemberList(id);
+		if(list == null || list.size() == 0)
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		if(list == null || list.size() == 0)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
