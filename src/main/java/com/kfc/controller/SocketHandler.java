@@ -21,9 +21,11 @@ public class SocketHandler {
         String userName = socketVO.getUserName();
         // vo에서 setter로 content를 가져옵니다.
         String content = socketVO.getContent();
+        String user_pic = socketVO.getUser_pic();
+        
 
         // 생성자로 반환값을 생성합니다.
-        Chat result = new Chat(userName, content);
+        Chat result = new Chat(userName, content, user_pic);
         // 반환
         return result;
     }

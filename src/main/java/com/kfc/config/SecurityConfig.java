@@ -79,6 +79,8 @@ public class SecurityConfig {// 애가 필터 체인임
 		.and()
 		.logout() // 로그아웃 관련 처리
 		.logoutUrl("/logout") // 로그아웃 URL 설정
+		.invalidateHttpSession(true) // 로그아웃 후 세션 초기화 설정
+		.deleteCookies("JSESSIONID")// 로그아웃 후 쿠기 삭제 설정
 		.logoutSuccessHandler((request, response, authentication) -> {
 			//중복 로그인 방지를 위해 로그아웃시 로그인상태를 false로 변경
 			
@@ -90,15 +92,13 @@ public class SecurityConfig {// 애가 필터 체인임
 
 		})
 		//.logoutSuccessUrl("/") // 로그아웃 성공 후 이동할 URL 설정 이것도 rest에선 못썻ㅂ
-		.invalidateHttpSession(true) // 로그아웃 후 세션 초기화 설정
-		.deleteCookies("JSESSIONID")// 로그아웃 후 쿠기 삭제 설정
 		.and()
 		.cors()
 		.and()
 		.sessionManagement()
      		.maximumSessions(1) // 동시 세션 제한 설정
      		.sessionRegistry(sessionRegistry())
-     		.maxSessionsPreventsLogin(true)
+     		.maxSessionsPreventsLogin(false)
      	    .and()
      	.and()
 		.addFilterBefore(requestContextFilter(), UsernamePasswordAuthenticationFilter.class);

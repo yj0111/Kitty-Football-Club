@@ -31,8 +31,10 @@ public class myTeamManageController {
 	@Autowired
 	MyTeamManageService myTeamManageService; 
 	//멤버 리스트 가져오기
-	@GetMapping("/list/{id}")
-	public ResponseEntity<?> memberList(@PathVariable int id){
+	@GetMapping("/list")
+	public ResponseEntity<?> memberList(HttpSession session){
+		User user = (User) session.getAttribute("loginUser");
+		int id =user.getTeam_id();
 		List<User> list = myTeamManageService.searchMemberList(id);
 		if(list == null || list.size() == 0)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -42,9 +44,11 @@ public class myTeamManageController {
 	//멤버 팀에서 추방하기
 	@PutMapping("/kickOut") 
 	public ResponseEntity<?> kickOut(@RequestBody int id , HttpSession session){
+		System.out.println("id" + id);
+		
 		//로그인한 사용자가 속한 팀이면서 로그인한 사용자가 운영자 일 때만 추방 가능
 		User user = (User) session.getAttribute("loginUser");
-		if(!user.getUser_team_authority().equals("운영자") || user.getTeam_id() != id) {
+		if(!user.getUser_team_authority().equals("운영자")) {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}
 		int result = myTeamManageService.kickOutUser(id);

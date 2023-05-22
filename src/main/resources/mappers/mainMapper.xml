@@ -17,16 +17,35 @@
 		LIMIT 2;
     </select>
     
-     <select id="gameList"  resultType="Game">
-		SELECT t1.team_name AS team1_name, IFNULL(t2.team_name, 'null') AS team2_name, g.game_date, t1.team_logo AS team1_logo, IFNULL(t2.team_logo, 'null') AS team2_logo 
+     <select id="gameToday"  resultType="Game">
+		SELECT t1.team_name AS team1_name, IFNULL(t2.team_name, 'null') AS team2_name, TIME(g.game_date) as game_date, t1.team_logo AS team1_logo, IFNULL(t2.team_logo, 'null') AS team2_logo 
 		FROM game g
 		JOIN Gather gd1 ON g.game_team1 = gd1.gather_id
 		LEFT JOIN Gather gd2 ON g.game_team2 = gd2.gather_id
 		JOIN Team t1 ON gd1.team_id = t1.team_id
 		LEFT JOIN Team t2 ON gd2.team_id = t2.team_id
-		WHERE game_status = 0
-		OR game_status= 1
-		AND game_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 3 DAY);
+		WHERE game_status = 0 OR game_status = 1
+		AND DATE(game_date) = CURDATE();
+    </select>
+      <select id="gameTommo"  resultType="Game">
+		SELECT t1.team_name AS team1_name, IFNULL(t2.team_name, 'null') AS team2_name, TIME(g.game_date) as game_date, t1.team_logo AS team1_logo, IFNULL(t2.team_logo, 'null') AS team2_logo 
+		FROM game g
+		JOIN Gather gd1 ON g.game_team1 = gd1.gather_id
+		LEFT JOIN Gather gd2 ON g.game_team2 = gd2.gather_id
+		JOIN Team t1 ON gd1.team_id = t1.team_id
+		LEFT JOIN Team t2 ON gd2.team_id = t2.team_id
+		WHERE (game_status = 0 OR game_status = 1)
+		AND DATE(game_date) = DATE_ADD(CURDATE(), INTERVAL 1 DAY);
+    </select>
+     <select id="gameSand"  resultType="Game">
+		SELECT t1.team_name AS team1_name, IFNULL(t2.team_name, 'null') AS team2_name, TIME(g.game_date) as game_date, t1.team_logo AS team1_logo, IFNULL(t2.team_logo, 'null') AS team2_logo 
+		FROM game g
+		JOIN Gather gd1 ON g.game_team1 = gd1.gather_id
+		LEFT JOIN Gather gd2 ON g.game_team2 = gd2.gather_id
+		JOIN Team t1 ON gd1.team_id = t1.team_id
+		LEFT JOIN Team t2 ON gd2.team_id = t2.team_id
+		WHERE (game_status = 0 OR game_status = 1)
+		AND DATE(game_date) = DATE_ADD(CURDATE(), INTERVAL 2 DAY);
     </select>
     
       
