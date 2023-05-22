@@ -18,7 +18,10 @@ public class User {
 	private String user_team_join_date; //팀가입일자
 	private String user_team_authority; //팀에서 등급
 	private String user_position; //주 포지션
+
 	
+	
+
 	public User() { //기본생성자
 
 	}
@@ -187,5 +190,7 @@ public class User {
 	public void setUser_team_authority(String user_team_authority) {
 		this.user_team_authority = user_team_authority;
 	}
+
+
 	
 }

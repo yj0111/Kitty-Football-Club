@@ -27,9 +27,10 @@
 	</select>
 	
 	<select id="gatherOne" parameterType="int" resultType="Gather" >
-	SELECT * 
-	FROM `gather`
-	WHERE gather_id = #{gather_id};
+		SELECT * 
+		FROM gather g 
+  	  	inner join stadium s on g.stadium_id = s.stadium_id
+		WHERE gather_id = #{gather_id}
 	</select>
 	
 </mapper>

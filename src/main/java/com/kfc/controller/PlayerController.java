@@ -36,7 +36,9 @@ public class PlayerController {
 	
 	@PostMapping("/applyGame/{gather_id}")
 	public ResponseEntity<Integer> applyGame(@PathVariable int gather_id, HttpSession session) {
+	
 		User user = (User) session.getAttribute("loginUser");
+		System.out.println("user" + user);
 		int id = user.getId(); // 회원 아이디
 		Player player = new Player();
 		player.setId(id);
@@ -48,7 +50,7 @@ public class PlayerController {
 		
 		System.out.println("현재 인원 : "+ playerCnt); //이사람이 신청 한 뒤 몇명인지?
 		
-		if(playerCnt == 3) {
+		if(playerCnt == 11) {
 			Gather gather = gatherService.gatherOne(gather_id);
 			//경기장, 날짜 같은애 가져오기
 			

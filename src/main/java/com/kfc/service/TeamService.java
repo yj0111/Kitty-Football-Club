@@ -13,7 +13,7 @@ public interface TeamService {
 
 	List<Team> teamRanking();
 	
-	List<Team> MyteamRank(int id); // 우리팀 랭킹, 승 패 무 
+	Team MyteamRank(int id); // 우리팀 랭킹, 승 패 무 
 
 
 	List<Game> myteamGameList(int id);

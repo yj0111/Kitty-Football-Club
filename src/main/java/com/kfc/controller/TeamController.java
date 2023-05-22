@@ -97,11 +97,11 @@ public class TeamController {
 	public ResponseEntity<?> MyteamRank(HttpSession session){
 		User user = (User) session.getAttribute("loginUser");
 		int id = user.getTeam_id();
-		List<Team> list = teamservice.MyteamRank(id);
+		Team list = teamservice.MyteamRank(id);
 		if(list == null) {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<Team>>(list, HttpStatus.OK);
+		return new ResponseEntity<Team>(list, HttpStatus.OK);
 	}
 
 	//우리팀의 최근 경기 결고 2개 가져오기

@@ -2,6 +2,7 @@ package com.kfc.config.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.kfc.dto.User;
 
 import lombok.Data;
-
-
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 
 //시큐리티가 login 주소 요청이 오면 낚아채서 로그인을 진행시킨다
 //로그인을 진행이 완료가 되면 시큐리티 session을 만들어 준다(Security ContextHolder 라는 키에 세션정보 저장)
@@ -53,7 +54,8 @@ public class PrincipalDetails implements UserDetails{
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return true; 
+
+		return true;
 	}
 
 	@Override
@@ -73,6 +75,22 @@ public class PrincipalDetails implements UserDetails{
 		return collet;
 	}
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        PrincipalDetails other = (PrincipalDetails) obj;
+        // 여기에서 사용자를 식별하는 필드를 비교하여 동일한지 확인합니다.
+        return Objects.equals(user.getUser_id(), other.user.getUser_id());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(user.getUser_id());
+    }
 	
 }

@@ -39,7 +39,7 @@ public class TeamServiceImpl implements TeamService {
 	}
 	
 	@Override
-	public List<Team> MyteamRank(int id) {
+	public Team MyteamRank(int id) {
 		return teamDao.MyteamRank(id);
 	}
 

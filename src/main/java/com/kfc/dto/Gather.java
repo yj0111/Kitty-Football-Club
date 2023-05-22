@@ -10,7 +10,43 @@ public class Gather {
 	
 	private int player_cnt;// 모인 사람 수
 	private int game_id; //쿼리를 위해서........ 
+	private String stadium_img;
+	private String stadium_name;
+	private String stadium_address;
+	private String stadium_price;
 	
+	public String getStadium_price() {
+		return stadium_price;
+	}
+
+	public void setStadium_price(String stadium_price) {
+		this.stadium_price = stadium_price;
+	}
+
+	public String getStadium_img() {
+		return stadium_img;
+	}
+
+	public void setStadium_img(String stadium_img) {
+		this.stadium_img = stadium_img;
+	}
+
+	public String getStadium_name() {
+		return stadium_name;
+	}
+
+	public void setStadium_name(String stadium_name) {
+		this.stadium_name = stadium_name;
+	}
+
+	public String getStadium_address() {
+		return stadium_address;
+	}
+
+	public void setStadium_address(String stadium_address) {
+		this.stadium_address = stadium_address;
+	}
+
 	public int getGame_id() {
 		return game_id;
 	}

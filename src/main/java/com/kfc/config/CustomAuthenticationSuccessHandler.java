@@ -12,6 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.kfc.config.auth.PrincipalDetails;
+import com.kfc.dto.User;
+
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Override
@@ -22,6 +25,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		// 로그인 사용자 정보 가져오기
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         
+        //중복 로그인 방지 위해 true로 변경
+      
         // JSESSIONID 설정
         String sessionId = session.getId();
         response.setHeader("JSESSIONID", sessionId);
@@ -34,7 +39,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         
         response.setContentType("application/json");
         response.getWriter().write(jsonResponse);
-
+      
 	}
 
 }

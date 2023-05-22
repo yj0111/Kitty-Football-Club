@@ -15,10 +15,19 @@ public class Team {
 	private String user_name; //대표 이름
 	private int total_cnt; //팀원수 
 	private int ranking; // 등수
+	private int score; // 등수
 	
 	private int id;
 	
 	
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -27,12 +27,17 @@ public class PrincipalDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		//username은 고정 이름이기 때문에 dto랑 맞춰주거나 config에서 바꿔 줘야 함
 		User user = loginDao.findByUsername(username);
+	//	User logined = (User) httpSession.getAttribute("loginUser");
+		
+		
 		httpSession.setAttribute("loginUser", user);
+		
 		//이름만 확인하는 것 같지만 실제론 비밀번호를 알아서 검증해 준다.
 		//디폴트가 bCryptPasswordEncoder.encode 되어서 검증 해줌.
 		if(user == null) {
 			  throw new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username);
 		}
+
 		return new PrincipalDetails(user); //user 검증하고 맞으면PrincipalDetails(user) 객체생성
 	}
 
