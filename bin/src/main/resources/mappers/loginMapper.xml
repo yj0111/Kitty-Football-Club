@@ -9,6 +9,11 @@
 			AND user_password =#{user_password}
     </select>
     
+    <select id="findByUsername" parameterType="String" resultType="User">
+			SELECT * FROM user
+			WHERE user_id = #{username}
+    </select>
+    
     <select id="getUser" parameterType="String" resultType="User">
 		SELECT * FROM user
 		WHERE user_kakao_id=#{id}

@@ -98,7 +98,7 @@ public class SecurityConfig {// 애가 필터 체인임
 		.sessionManagement()
      		.maximumSessions(1) // 동시 세션 제한 설정
      		.sessionRegistry(sessionRegistry())
-     		.maxSessionsPreventsLogin(true)
+     		.maxSessionsPreventsLogin(false)
      	    .and()
      	.and()
 		.addFilterBefore(requestContextFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -15,6 +15,35 @@ public class Gather {
 	private String stadium_address;
 	private String stadium_price;
 	
+	private int year;
+	private int month;
+	private int date;
+	
+	
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
+	public int getDate() {
+		return date;
+	}
+
+	public void setDate(int date) {
+		this.date = date;
+	}
+
 	public String getStadium_price() {
 		return stadium_price;
 	}
@@ -106,8 +135,18 @@ public class Gather {
 		this.gather_date = gather_date;
 	}
 
+	@Override
+	public String toString() {
+		return "Gather [gather_id=" + gather_id + ", stadium_id=" + stadium_id + ", team_id=" + team_id
+				+ ", gather_date=" + gather_date + ", gather_announcement=" + gather_announcement + ", player_cnt="
+				+ player_cnt + ", game_id=" + game_id + ", stadium_img=" + stadium_img + ", stadium_name="
+				+ stadium_name + ", stadium_address=" + stadium_address + ", stadium_price=" + stadium_price + ", year="
+				+ year + ", month=" + month + ", date=" + date + "]";
+	}
+
 	public Gather(int gather_id, int stadium_id, int team_id, String gather_date, String gather_announcement,
-			int player_cnt) {
+			int player_cnt, int game_id, String stadium_img, String stadium_name, String stadium_address,
+			String stadium_price, int year, int month, int date) {
 		super();
 		this.gather_id = gather_id;
 		this.stadium_id = stadium_id;
@@ -115,13 +154,16 @@ public class Gather {
 		this.gather_date = gather_date;
 		this.gather_announcement = gather_announcement;
 		this.player_cnt = player_cnt;
+		this.game_id = game_id;
+		this.stadium_img = stadium_img;
+		this.stadium_name = stadium_name;
+		this.stadium_address = stadium_address;
+		this.stadium_price = stadium_price;
+		this.year = year;
+		this.month = month;
+		this.date = date;
 	}
 
-	@Override
-	public String toString() {
-		return "Gather [gather_id=" + gather_id + ", stadium_id=" + stadium_id + ", team_id=" + team_id
-				+ ", gather_date=" + gather_date + ", gather_announcement=" + gather_announcement + ", player_cnt="
-				+ player_cnt + "]";
-	}
+	
 
 }
