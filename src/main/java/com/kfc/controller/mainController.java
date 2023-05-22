@@ -1,5 +1,6 @@
 package com.kfc.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,9 @@ public class mainController {
 	//앞으로 3일간의 경기 보여주기
 	@GetMapping("/gameList")
 	public ResponseEntity<?> gameList(){
-	
-		List<Game> list = mainService.gameList();
-		if(list == null || list.size() == 0)
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		return new ResponseEntity<List<Game>>(list, HttpStatus.OK);
+		HashMap <String, List<Game>> map = new HashMap<String, List<Game>>();
+		 map = mainService.gameList();
+		
+		return new ResponseEntity<HashMap <String, List<Game>>>(map, HttpStatus.OK);
 	}
 }
