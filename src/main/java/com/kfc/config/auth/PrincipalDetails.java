@@ -46,6 +46,12 @@ public class PrincipalDetails implements UserDetails{
 	public String getUsername() {
 		return user.getUser_id(); //
 	}
+	public String getUserpic() {
+		return user.getUser_pic(); //
+	}
+	public String getUser_name() {
+		return user.getUser_name(); //
+	}
 
 	@Override
 	public boolean isAccountNonExpired() {

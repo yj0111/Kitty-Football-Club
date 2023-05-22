@@ -8,6 +8,10 @@ public interface MainDao {
 
 	List<Game> searchRecord();
 
-	List<Game> gameList();
+	List<Game> gameToday();
+
+	List<Game> gameTommo();
+
+	List<Game> gameSand();
 
 }
