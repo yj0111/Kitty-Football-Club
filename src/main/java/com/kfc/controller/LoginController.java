@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.HashMap;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -61,27 +62,37 @@ public class LoginController {
 		StringBuffer url = new StringBuffer();
 		url.append("https://kauth.kakao.com/oauth/authorize?");
 		url.append("client_id=" + "0d71d6cba5e7587e9e8f923fe4fa9212");
-		url.append("&redirect_uri=http://localhost:8080/kfc/kakaoCallback");
+		url.append("&redirect_uri=http://localhost:8080/login");
 		url.append("&response_type=code");
 		response.sendRedirect(String.valueOf(url));
 	}
 
 	@GetMapping(path = "/kakaoCallback")
-	public ResponseEntity<String> kakaoCallback(@RequestParam String code, HttpSession session) {
+	public ResponseEntity<?> kakaoCallback(@RequestParam String code, HttpSession session ,HttpServletResponse response) {
 		System.out.println("cod" + code);
-		String response = "";
+		String responses = "";
 		String token = loginService.getKakaoAccessToken(code);
+		
 		String id = loginService.createKakaoUser(token);
-		response = id;
+		responses = id;
 		System.out.println(id);
 		User user = loginService.getUser(id);
+		
 		if(user == null){
 			//회원가입 페이지로 보내!!
-			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+			HashMap<String, String> map = new HashMap<String, String>();
+			responses = "signUp";
+			map.put("key", "signUp");
+			map.put("id", id);
+			return new ResponseEntity<>(map,  HttpStatus.OK);
 		}else{
 			session.setAttribute("loginUser" , user);
+			String sessionId = session.getId();
+			Cookie cookie = new Cookie("JSESSIONID",sessionId);
+			cookie.setPath("/");
+			response.addCookie(cookie);
 			//메인으로 보내!!
-			return new ResponseEntity<>(response, HttpStatus.OK);
+			return new ResponseEntity<>(user, HttpStatus.OK);
 		}
 	}
 
@@ -97,25 +108,30 @@ public class LoginController {
 		url.append("https://nid.naver.com/oauth2.0/authorize?");
 		url.append("client_id=gaTGmrrb4UV7xeZFXhjb");
 		url.append("&response_type=code");
-		url.append("&redirect_uri=http://localhost:8080/kfc/naverCallback");
+		url.append("&redirect_uri=http://localhost:8080/login");
 		url.append("&state=" + state);
 
 		response.sendRedirect(String.valueOf(url));
 	}
 
 	@GetMapping(path = "/naverCallback")
-	public ResponseEntity<String> naverCallback(@RequestParam String state, @RequestParam String code, HttpSession session) {
-		String token = loginService.getToken(state, code);
+	public ResponseEntity<?> naverCallback(@RequestParam String state, @RequestParam String Navercode, HttpSession session,HttpServletResponse response) {
+		String token = loginService.getToken(state, Navercode);
 		String id = loginService.getUserInfo(token);
-		System.out.println(id);
+		System.out.println("naverid : " + id);
 		User user = loginService.getUserNaver(id);
 		if(user == null){
 			//회원가입 페이지로 보내!!
-			return new ResponseEntity<>(id, HttpStatus.BAD_REQUEST);
+			String responses = "signUp";
+			return new ResponseEntity<>(responses, HttpStatus.BAD_REQUEST);
 		}else{
 			//메인으로 보내!!
 			session.setAttribute("loginUser" , user);
-			return new ResponseEntity<>(id, HttpStatus.OK);
+			String sessionId = session.getId();
+			Cookie cookie = new Cookie("JSESSIONID",sessionId);
+			cookie.setPath("/");
+			response.addCookie(cookie);
+			return new ResponseEntity<>(user, HttpStatus.OK);
 		}
 	}
 	
