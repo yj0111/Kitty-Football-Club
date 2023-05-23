@@ -6,20 +6,27 @@ public class Gather {
 	private int team_id; // 팀 아이디
 	private String gather_date; // 모집 날짜
 	private String gather_announcement; // 모집 글
-	
-	
+
 	private int player_cnt;// 모인 사람 수
-	private int game_id; //쿼리를 위해서........ 
+	private int game_id; // 쿼리를 위해서........
 	private String stadium_img;
 	private String stadium_name;
 	private String stadium_address;
 	private String stadium_price;
-	
+	private String team_logo;
+
 	private int year;
 	private int month;
 	private int date;
-	
-	
+
+	public String getTeam_logo() {
+		return team_logo;
+	}
+
+	public void setTeam_logo(String team_logo) {
+		this.team_logo = team_logo;
+	}
+
 	public int getYear() {
 		return year;
 	}
@@ -140,13 +147,13 @@ public class Gather {
 		return "Gather [gather_id=" + gather_id + ", stadium_id=" + stadium_id + ", team_id=" + team_id
 				+ ", gather_date=" + gather_date + ", gather_announcement=" + gather_announcement + ", player_cnt="
 				+ player_cnt + ", game_id=" + game_id + ", stadium_img=" + stadium_img + ", stadium_name="
-				+ stadium_name + ", stadium_address=" + stadium_address + ", stadium_price=" + stadium_price + ", year="
-				+ year + ", month=" + month + ", date=" + date + "]";
+				+ stadium_name + ", stadium_address=" + stadium_address + ", stadium_price=" + stadium_price
+				+ ", team_logo=" + team_logo + ", year=" + year + ", month=" + month + ", date=" + date + "]";
 	}
 
 	public Gather(int gather_id, int stadium_id, int team_id, String gather_date, String gather_announcement,
 			int player_cnt, int game_id, String stadium_img, String stadium_name, String stadium_address,
-			String stadium_price, int year, int month, int date) {
+			String stadium_price, String team_logo, int year, int month, int date) {
 		super();
 		this.gather_id = gather_id;
 		this.stadium_id = stadium_id;
@@ -159,11 +166,10 @@ public class Gather {
 		this.stadium_name = stadium_name;
 		this.stadium_address = stadium_address;
 		this.stadium_price = stadium_price;
+		this.team_logo = team_logo;
 		this.year = year;
 		this.month = month;
 		this.date = date;
 	}
-
-	
 
 }
