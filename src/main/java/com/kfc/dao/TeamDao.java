@@ -15,7 +15,7 @@ public interface TeamDao {
 
 	List<Team> searchList(String word);
 
-	List<Team> teamRanking();
+	List<Team> teamRanking1();
 
 	Team MyteamRank(int id); // 우리팀 랭킹, 승 패 무 
 
@@ -29,5 +29,7 @@ public interface TeamDao {
 	int teamRecording2(int team2_id, int team1);
 
 	List<Game> myteamRecord(int id);
+
+	List<Team> teamRanking2();
 
 }

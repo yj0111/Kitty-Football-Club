@@ -1,5 +1,6 @@
 package com.kfc.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.kfc.dto.Game;
@@ -11,7 +12,7 @@ public interface TeamService {
 
 	List<Team> searchList(String word);
 
-	List<Team> teamRanking();
+	HashMap<String, List<Team>> teamRanking();
 	
 	Team MyteamRank(int id); // 우리팀 랭킹, 승 패 무 
 

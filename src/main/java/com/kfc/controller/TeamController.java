@@ -2,6 +2,7 @@ package com.kfc.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -85,11 +86,11 @@ public class TeamController {
 	//메인페이지 랭킹 가져오기
 	@GetMapping("/teamrank")
 	public ResponseEntity<?> teamRanking(){
-		List<Team> list = teamservice.teamRanking();
+		HashMap<String, List<Team>> list = teamservice.teamRanking();
 		if(list == null) {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<Team>>(list, HttpStatus.OK);
+		return new ResponseEntity<HashMap<String, List<Team>>>(list, HttpStatus.OK);
 	}
 	
 	//우리팀 랭킹, 승 패 무 가져오기

@@ -1,5 +1,6 @@
 package com.kfc.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,11 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public List<Team> teamRanking() {
-		return teamDao.teamRanking();
+	public HashMap<String, List<Team>> teamRanking() {
+		HashMap<String, List<Team>> map = new HashMap<String, List<Team>>();
+		map.put("no" ,teamDao.teamRanking2());
+		map.put("top", teamDao.teamRanking1());
+		return map;
 	}
 	
 	@Override

@@ -6,10 +6,11 @@
 	
 	
     <select id="searchRecord"  resultType="Game">
-		SELECT t1.team_name AS team1_name, t2.team_name AS team2_name, g.team1_score, g.team2_score ,  g.game_date , t1.team_logo as team1_logo , t2.team_logo as team2_logo
+		SELECT t1.team_name AS team1_name, t2.team_name AS team2_name, g.team1_score, g.team2_score , DATE_FORMAT(g.game_date, '%m-%d') AS game_date , t1.team_logo as team1_logo , t2.team_logo as team2_logo
 		FROM Game g
 		JOIN Gather gd1 ON g.game_team1 = gd1.gather_id
 		JOIN Gather gd2 ON g.game_team2 = gd2.gather_id
+		
 		JOIN Team t1 ON gd1.team_id = t1.team_id
 		JOIN Team t2 ON gd2.team_id = t2.team_id
 		WHERE g.game_status=2
