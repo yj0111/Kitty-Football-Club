@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kfc.dao.GatherDao">
+	<!-- 내가 모집일정 주최 -->
+	<insert id="gather" parameterType="Gather">
+		INSERT INTO `gather`(`gather_id`, `stadium_id`, `team_id`,`gather_date`,`gather_announcement`)
+			VALUES (#{gather_id}, #{stadium_id}, #{team_id},#{gather_date},#{gather_announcement});
+	</insert>
+	
+	<!-- 제일 최근에 만든 일정  -->
+	<select id="selectGatherInfo" resultType="int">
+		select gather_id
+        from gather
+		ORDER BY gather_id DESC LIMIT 1;
+	</select>
+		
+	<select id="gatherList" parameterType="Gather" resultType="Gather" >
+	SELECT s.stadium_name, g.gather_date, COUNT(*) AS player_cnt
+	FROM gather g
+	JOIN stadium s ON g.stadium_id = s.stadium_id
+	JOIN player p ON p.gather_id = g.gather_id
+	WHERE g.team_id = #{team_id}
+	and g.gather_date = #{gather_date}
+	GROUP BY s.stadium_name, g.gather_date;
+	</select>
+	
+	<select id="gatherOne" parameterType="int" resultType="Gather" >
+	SELECT * 
+	FROM `gather`
+	WHERE gather_id = #{gather_id};
+	</select>
+	
+</mapper>

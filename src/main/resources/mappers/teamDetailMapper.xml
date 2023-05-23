@@ -4,24 +4,34 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kfc.dao.TeamDetailDao">
 	<select id="teamDetail" parameterType="int" resultType="Team">
-		SELECT ranking, score, team_id, team_name, team_win, team_lose, team_draw, team_announcement, total_cnt
+		SELECT
+		ranking, score, team_id, team_name, team_win, team_lose, team_draw,
+		team_announcement, total_cnt, team_logo
 		FROM (
-		  SELECT rank() OVER (ORDER BY score DESC) AS ranking, score, team_id, team_name, team_win, team_lose, team_draw, team_announcement, total_cnt
-		  FROM (
-		    SELECT (team_win * 3 + team_draw + team_lose * (-3)) AS score, t.team_id, t.team_name, t.team_win, t.team_lose, t.team_draw, t.team_announcement, (SELECT COUNT(*) FROM user WHERE team_id = t.team_id) AS total_cnt
-		    FROM team t
-		    INNER JOIN user u ON t.team_id = u.team_id
-		    WHERE t.team_id = #{team_id}
-		    GROUP BY t.team_id, t.team_name, t.team_win, t.team_lose, t.team_draw, t.team_announcement
-		  ) subquery
-		) t;
+		SELECT rank() OVER (ORDER BY score DESC) AS ranking, score, team_id,
+		team_name, team_win, team_lose, team_draw, team_announcement,
+		total_cnt, team_logo
+		FROM (
+		SELECT (team_win * 3 + team_draw + team_lose * (-3)) AS score, t.team_id,
+		t.team_name, t.team_win, t.team_lose, t.team_draw,
+		t.team_announcement, (SELECT COUNT(*) FROM user WHERE team_id =
+		t.team_id) AS total_cnt, t.team_logo
+		FROM team t
+		INNER JOIN user u ON t.team_id = u.team_id
+		WHERE t.team_id = #{team_id}
+		GROUP BY t.team_id, t.team_name, t.team_win, t.team_lose, t.team_draw,
+		t.team_announcement, t.team_logo
+		) subquery
+		) t
+		LIMIT 1;
 	</select>
-	
-	    
-    <!-- 팀 가입했을때 -->
-   	<update id="JoinTeam" parameterType="Team">
+
+
+	<!-- 팀 가입했을때 -->
+	<update id="JoinTeam" parameterType="Team">
 		UPDATE user
-		SET team_id = #{team_id},
+		SET team_id =
+		#{team_id},
 		user_team_join_date = now(),
 		user_team_authority = "회원"
 		WHERE id = #{id};
