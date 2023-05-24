@@ -9,6 +9,11 @@
 		VALUES ( #{team_name}, #{team_logo}, #{team_content}, #{team_announcement});
 	</insert>
 	
+    <select id="getTeam" resultType="Team">
+		select * from team
+		ORDER BY team_id DESC LIMIT 1;
+    </select>
+	
 	<!-- 최근에 만들어진 팀 1개 -->
     <select id="selectTeamInfo" parameterType="Team" resultType="Team">
 		select * from team
@@ -48,7 +53,7 @@
   	   <select id="teamRanking2" resultType="Team">
 		SELECT ranking, team_name, score, team_win, team_draw, team_lose, team_logo
 		FROM (
-		    SELECT DENSE_RANK() OVER (ORDER BY score DESC) AS ranking, score, team_name, team_win, team_draw, team_lose, team_logo
+		    SELECT row_number()  OVER (ORDER BY score DESC) AS ranking, score, team_name, team_win, team_draw, team_lose, team_logo
 		    FROM (
 		        SELECT (team_win * 3 + team_draw + team_lose * (-3)) AS score, team_name, team_win, team_draw, team_lose, team_logo
 		        FROM team
@@ -61,7 +66,7 @@
  	    <select id="MyteamRank" parameterType="int" resultType="Team" >
   		SELECT ranking, team_name, score,team_win, team_draw, team_lose,team_id,team_logo
 		FROM (
-			SELECT DENSE_RANK() OVER (ORDER BY score DESC) AS ranking, score, team_name, team_win, team_draw, team_lose,team_id,team_logo
+			SELECT row_number()  OVER (ORDER BY score DESC) AS ranking, score, team_name, team_win, team_draw, team_lose,team_id,team_logo
 			FROM (
             SELECT (team_win * 3 + team_draw + team_lose * (-3)) AS score, team_name, team_win, team_draw, team_lose , team_id,team_logo
 			FROM team

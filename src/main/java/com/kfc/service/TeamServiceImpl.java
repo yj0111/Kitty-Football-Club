@@ -3,6 +3,8 @@ package com.kfc.service;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kfc.dao.TeamDao;
 import com.kfc.dto.Game;
 import com.kfc.dto.Team;
+import com.kfc.dto.User;
 
 @Service
 public class TeamServiceImpl implements TeamService {
@@ -17,12 +20,18 @@ public class TeamServiceImpl implements TeamService {
 	TeamDao teamDao;
 
 	@Override
-	public int creatTeam(Team team, int id) {
+	public int creatTeam(Team team, int id , HttpSession session) {
 		int result = teamDao.createTeam(team);
 		int userResult = 0;
 		if (result == 1) {
 			Team tm = teamDao.selectTeamInfo();
 			userResult = teamDao.UserUpdate(tm.getTeam_id(), tm.getTeam_birth(), id);
+			User user = (User) session.getAttribute("loginUser");
+			user.setTeam_id(tm.getTeam_id());
+			user.setUser_team_join_date(tm.getTeam_birth());
+			user.setUser_team_authority("운영자");
+//			session.removeAttribute("loginUser");
+//			session.setAttribute("loginUser", user);
 		} else {
 			return 0;
 		}
@@ -85,6 +94,11 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public List<Game> myteamRecord(int id) {
 		return teamDao.myteamRecord(id);
+	}
+
+	@Override
+	public Team getTeam() {
+		return teamDao.getTeam();
 	}
 
 }

@@ -3,12 +3,14 @@ package com.kfc.service;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.kfc.dto.Game;
 import com.kfc.dto.Team;
 
 public interface TeamService {
 
-	int creatTeam(Team team , int id);
+	int creatTeam(Team team , int id, HttpSession session);
 
 	List<Team> searchList(String word);
 
@@ -22,5 +24,7 @@ public interface TeamService {
 	int gameRecording(Game game);
 
 	List<Game> myteamRecord(int id);
+
+	Team getTeam();
 
 }

@@ -64,9 +64,10 @@ public class TeamController {
             team.setTeam_logo(filename);
         }
 		
+		int result = teamservice.creatTeam(team, id, session);
+
 		
 		
-		int result = teamservice.creatTeam(team, id);
 		
 		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
 	}
@@ -109,8 +110,10 @@ public class TeamController {
 	@GetMapping("/myteamRecord")
 	public ResponseEntity<?> myteamRecord(HttpSession session){
 		User user = (User) session.getAttribute("loginUser");
+		System.out.println("myteamReco user :" + user);
 		int id = user.getTeam_id();
 		List<Game> list = teamservice.myteamRecord(id);
+		System.out.println("myteamReco list :" + list);
 		if(list == null) {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}

@@ -40,10 +40,11 @@ public class TeamDetailController {
 	@GetMapping("/detail2")
 	public ResponseEntity<Team> teamDetail2(HttpSession session){
 		 User user = (User) session.getAttribute("loginUser");
+		 System.out.println("detail2 team" + user);
 		 int team_id = user.getTeam_id();
 		Team team = detailService.teamDetail(team_id);
 
-		System.out.println(team);
+		System.out.println("detail2 team" + team);
 		if(team == null) {
 			return new ResponseEntity<Team>(HttpStatus.NO_CONTENT);
 		}
