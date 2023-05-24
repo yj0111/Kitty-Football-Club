@@ -4,133 +4,152 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kfc.dao.TeamDao">
 	<!-- 팀 생성 -->
-    <insert id="createTeam" parameterType="Team">
-		INSERT INTO `team` ( `team_name`, `team_logo`, `team_content`, `team_announcement`) 
+	<insert id="createTeam" parameterType="Team">
+		INSERT INTO `team` (
+		`team_name`, `team_logo`, `team_content`, `team_announcement`)
 		VALUES ( #{team_name}, #{team_logo}, #{team_content}, #{team_announcement});
 	</insert>
-	
+
 	<!-- 최근에 만들어진 팀 1개 -->
-    <select id="selectTeamInfo" parameterType="Team" resultType="Team">
+	<select id="selectTeamInfo" parameterType="Team"
+		resultType="Team">
 		select * from team
 		ORDER BY team_id DESC LIMIT 1;
-    </select>
-    
+	</select>
+
 	<!-- 팀 생성했을때 -->
 	<update id="UserUpdate" parameterType="HashMap">
 		UPDATE user
-		SET team_id = #{team_id},
+		SET team_id =
+		#{team_id},
 		user_team_join_date = #{team_birth},
-		user_team_authority = "운영자"
+		user_team_authority =
+		"운영자"
 		WHERE id = #{id};
 	</update>
 
-	<!-- 팀 검색 -->	
-     <select id="searchList" parameterType="String" resultType="Team">
+	<!-- 팀 검색 -->
+	<select id="searchList" parameterType="String" resultType="Team">
 		SELECT * FROM TEAM
 		WHERE TEAM_STATUS = 1
 		<if test="word != 'none'">
-		AND team_name LIKE concat('%', #{word}, '%')
+			AND team_name LIKE concat('%', #{word}, '%')
 		</if>
 		ORDER BY team_birth desc;
-  	  </select>
-  	  
-  	   <!-- 2~4위 까지 전체 팀 랭킹 -->
-  	  <select id="teamRanking1" resultType="Team">
-  		SELECT ranking, team_name, score,team_win, team_draw, team_lose, team_logo
-		FROM (SELECT RANK() OVER (ORDER BY score DESC) AS ranking, score, team_name, team_win, team_draw, team_lose, team_logo
- 		FROM (SELECT (team_win * 3 + team_draw + team_lose * (-3)) AS score, team_name, team_win, team_draw, team_lose, team_logo
-    	FROM team
-  		) subquery 
+	</select>
+
+	<!-- 2~4위 까지 전체 팀 랭킹 -->
+	<select id="teamRanking1" resultType="Team">
+		SELECT ranking, team_name, score,team_win, team_draw, team_lose, team_logo
+		FROM (SELECT RANK() OVER (ORDER BY score DESC) AS ranking, score,
+		team_name, team_win, team_draw, team_lose, team_logo
+		FROM (SELECT (team_win * 3 + team_draw + team_lose * (-3)) AS score,
+		team_name, team_win, team_draw, team_lose, team_logo
+		FROM team
+		) subquery
 		) t
-        limit 1;
-  	  </select>
-  	  <!-- 1위 -->
-  	   <select id="teamRanking2" resultType="Team">
+		limit 1;
+	</select>
+	<!-- 1위 -->
+	<select id="teamRanking2" resultType="Team">
 		SELECT ranking, team_name, score, team_win, team_draw, team_lose, team_logo
 		FROM (
-		    SELECT RANK() OVER (ORDER BY score DESC) AS ranking, score, team_name, team_win, team_draw, team_lose, team_logo
-		    FROM (
-		        SELECT (team_win * 3 + team_draw + team_lose * (-3)) AS score, team_name, team_win, team_draw, team_lose, team_logo
-		        FROM team
-		    ) subquery
-		) t
-			WHERE ranking BETWEEN 2 AND 5
-  	  </select>
-  	  
-  	    <!-- 우리팀 랭킹, 전적 -->
- 	    <select id="MyteamRank" parameterType="int" resultType="Team" >
-  		SELECT ranking, team_name, score,team_win, team_draw, team_lose,team_id,team_logo
+		SELECT DENSE_RANK() OVER (ORDER BY score DESC) AS ranking, score, team_name,
+		team_win, team_draw, team_lose, team_logo
 		FROM (
-			SELECT RANK() OVER (ORDER BY score DESC) AS ranking, score, team_name, team_win, team_draw, team_lose,team_id,team_logo
-			FROM (
-            SELECT (team_win * 3 + team_draw + team_lose * (-3)) AS score, team_name, team_win, team_draw, team_lose , team_id,team_logo
-			FROM team
-			) subquery 
-			) t
-            where team_id = #{team_id}
-  	  </select>
-  	  
-   	  <select id="myteamGameList" resultType="Game" parameterType="int">
-	  	SELECT t1.team_name AS team1_name, t2.team_name AS team2_name, g.game_date, t1.team_logo AS team1_logo, t2.team_logo AS team2_logo ,game_id,
-	  	t1.team_id as team1_id , t2.team_id as team2_id, g.team1_score , g.team2_score
-		FROM game g 
-		JOIN Gather gd1 ON g.game_team1 = gd1.gather_id 
-		JOIN Gather gd2 ON g.game_team2 = gd2.gather_id 
-		JOIN Team t1 ON gd1.team_id = t1.team_id 
-		JOIN Team t2 ON gd2.team_id = t2.team_id 
+		SELECT (team_win * 3 + team_draw + team_lose * (-3)) AS score, team_name,
+		team_win, team_draw, team_lose, team_logo
+		FROM team
+		) subquery
+		) t
+		where ranking BETWEEN 2 and 5;
+	</select>
+
+	<!-- 우리팀 랭킹, 전적 -->
+	<select id="MyteamRank" parameterType="int" resultType="Team">
+		SELECT ranking, team_name, score,team_win, team_draw,
+		team_lose,team_id,team_logo
+		FROM (
+		SELECT RANK() OVER (ORDER BY score DESC) AS ranking, score, team_name,
+		team_win, team_draw, team_lose,team_id,team_logo
+		FROM (
+		SELECT (team_win * 3 + team_draw + team_lose * (-3)) AS score, team_name,
+		team_win, team_draw, team_lose , team_id,team_logo
+		FROM team
+		) subquery
+		) t
+		where team_id = #{team_id}
+	</select>
+
+	<select id="myteamGameList" resultType="Game"
+		parameterType="int">
+		SELECT t1.team_name AS team1_name, t2.team_name AS team2_name, g.game_date,
+		t1.team_logo AS team1_logo, t2.team_logo AS team2_logo ,game_id,
+		t1.team_id as team1_id , t2.team_id as team2_id, g.team1_score ,
+		g.team2_score
+		FROM game g
+		JOIN Gather gd1 ON g.game_team1 = gd1.gather_id
+		JOIN Gather gd2 ON g.game_team2 = gd2.gather_id
+		JOIN Team t1 ON gd1.team_id = t1.team_id
+		JOIN Team t2 ON gd2.team_id = t2.team_id
 		WHERE game_status = 1
 		AND (gd1.team_id = #{id}
 		OR gd2.team_id=#{id})
-  	  </select>
-  	  
-  		<update id="gameRecording" parameterType="Game">
-			UPDATE game
-			SET team1_score = #{team1_score},
-			team2_score = #{team2_score},
-			game_status = 2
-			WHERE game_id = #{game_id};
-		</update>
-		
-  		<update id="teamRecording1" parameterType="int">
-			UPDATE team SET
-			<if test="team1 == 1">
-			 team_win = team_win +1
-			</if>
-			<if test="team1 == 2">
+	</select>
+
+	<update id="gameRecording" parameterType="Game">
+		UPDATE game
+		SET team1_score = #{team1_score},
+		team2_score = #{team2_score},
+		game_status = 2
+		WHERE game_id = #{game_id};
+	</update>
+
+	<update id="teamRecording1" parameterType="int">
+		UPDATE team SET
+		<if test="team1 == 1">
+			team_win = team_win +1
+		</if>
+		<if test="team1 == 2">
 			team_draw = team_draw +1
-			</if>
-			<if test="team1 == 3">
+		</if>
+		<if test="team1 == 3">
 			team_lose = team_lose +1
-			</if>
-			WHERE team_id = #{team1_id}
-		</update>
-		
-  		<update id="teamRecording2" parameterType="int">
-			UPDATE team SET
-			<if test="team1 == 1">
+		</if>
+		WHERE team_id = #{team1_id}
+	</update>
+
+	<update id="teamRecording2" parameterType="int">
+		UPDATE team SET
+		<if test="team1 == 1">
 			team_lose = team_lose +1
-			</if>
-			<if test="team1 == 2">
+		</if>
+		<if test="team1 == 2">
 			team_draw = team_draw +1
-			</if>
-			<if test="team1 == 3">
-			 team_win = team_win +1
-			</if>
-			WHERE team_id = #{team2_id}
-		</update>
-		
-  	  <select id="myteamRecord" resultType="Game" parameterType="int">
-		SELECT t1.team_name AS team1_name, t2.team_name AS team2_name, g.team1_score, g.team2_score ,  g.game_date , t1.team_logo as team1_logo , t2.team_logo as team2_logo,game_id
+		</if>
+		<if test="team1 == 3">
+			team_win = team_win +1
+		</if>
+		WHERE team_id = #{team2_id}
+	</update>
+
+	<select id="myteamRecord" resultType="Game" parameterType="int">
+		SELECT t1.team_name AS team1_name, t2.team_name AS team2_name,
+		g.team1_score, g.team2_score , g.game_date , t1.team_logo as
+		team1_logo , t2.team_logo as team2_logo,game_id
 		FROM Game g
-		JOIN Gather gd1 ON g.game_team1 = gd1.gather_id
-		JOIN Gather gd2 ON g.game_team2 = gd2.gather_id 
+		JOIN Gather
+		gd1 ON g.game_team1 = gd1.gather_id
+		JOIN Gather gd2 ON g.game_team2 =
+		gd2.gather_id
 		JOIN Team t1 ON gd1.team_id = t1.team_id
-		JOIN Team t2 ON gd2.team_id = t2.team_id
+		JOIN Team t2 ON gd2.team_id =
+		t2.team_id
 		WHERE g.game_status=2
-        AND (gd1.team_id = #{id}	
-		or gd2.team_id=#{id}) 
+		AND (gd1.team_id = #{id}
+		or gd2.team_id=#{id})
 		ORDER BY g.game_date desc
 		LIMIT 2;
-  	  </select>
-		
+	</select>
+
 </mapper>
