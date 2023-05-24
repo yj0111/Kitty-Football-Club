@@ -36,6 +36,14 @@ public class myTeamManageController {
 		List<User> list = myTeamManageService.searchMemberList(id);
 		if(list == null || list.size() == 0)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/list2")
+	public ResponseEntity<?> memberList2(HttpSession session){
+		User user = (User) session.getAttribute("loginUser");
+		int id = user.getTeam_id();
+		List<User> list = myTeamManageService.searchMemberList(id);
 		if(list == null || list.size() == 0)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
