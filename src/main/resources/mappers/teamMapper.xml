@@ -48,13 +48,13 @@
   	   <select id="teamRanking2" resultType="Team">
 		SELECT ranking, team_name, score, team_win, team_draw, team_lose, team_logo
 		FROM (
-		    SELECT RANK() OVER (ORDER BY score DESC) AS ranking, score, team_name, team_win, team_draw, team_lose, team_logo
+		    SELECT DENSE_RANK() OVER (ORDER BY score DESC) AS ranking, score, team_name, team_win, team_draw, team_lose, team_logo
 		    FROM (
 		        SELECT (team_win * 3 + team_draw + team_lose * (-3)) AS score, team_name, team_win, team_draw, team_lose, team_logo
 		        FROM team
 		    ) subquery
 		) t
-			WHERE ranking BETWEEN 2 AND 5
+			where ranking BETWEEN 2 and 5;
   	  </select>
   	  
   	    <!-- 우리팀 랭킹, 전적 -->
@@ -120,7 +120,7 @@
 		</update>
 		
   	  <select id="myteamRecord" resultType="Game" parameterType="int">
-		SELECT t1.team_name AS team1_name, t2.team_name AS team2_name, g.team1_score, g.team2_score ,  g.game_date , t1.team_logo as team1_logo , t2.team_logo as team2_logo,game_id
+		SELECT t1.team_name AS team1_name, t2.team_name AS team2_name, g.team1_score, g.team2_score ,  DATE_FORMAT(g.game_date, '%y.%m.%d') AS game_date , t1.team_logo as team1_logo , t2.team_logo as team2_logo,game_id
 		FROM Game g
 		JOIN Gather gd1 ON g.game_team1 = gd1.gather_id
 		JOIN Gather gd2 ON g.game_team2 = gd2.gather_id 
