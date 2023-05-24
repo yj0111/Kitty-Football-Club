@@ -41,4 +41,13 @@ public class mainController {
 		
 		return new ResponseEntity<HashMap <String, List<Game>>>(map, HttpStatus.OK);
 	}
+	
+	@GetMapping("/recordOne")
+	public ResponseEntity<?> recordLimit(){
+	
+		Game list = mainService.searchRecordOne();
+		if(list == null)
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<Game>(list, HttpStatus.OK);
+	}
 }

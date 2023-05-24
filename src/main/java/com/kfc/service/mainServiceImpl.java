@@ -33,4 +33,9 @@ public class mainServiceImpl implements MainService {
 		
 		return map;
 	}
+
+	@Override
+	public Game searchRecordOne() {
+		return mainDao.searchRecordOne();
+	}
 }

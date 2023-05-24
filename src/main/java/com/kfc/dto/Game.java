@@ -15,10 +15,18 @@ public class Game {
     private String team2_logo; //팀2이름
     private int team1_id; //팀1id
     private int team2_id; //팀2id
-    
+    private String stadium_name;
     
 
 
+
+	public String getStadium_name() {
+		return stadium_name;
+	}
+
+	public void setStadium_name(String stadium_name) {
+		this.stadium_name = stadium_name;
+	}
 
 	public int getTeam1_id() {
 		return team1_id;

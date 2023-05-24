@@ -11,4 +11,6 @@ public interface MainService {
 
 	HashMap<String, List<Game>> gameList();
 
+	Game  searchRecordOne();
+
 }

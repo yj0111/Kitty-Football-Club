@@ -1,5 +1,6 @@
 package com.kfc.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpServerErrorException;
 
 import com.kfc.dto.Team;
 import com.kfc.dto.User;
@@ -27,6 +29,18 @@ public class TeamDetailController {
 	
 	@GetMapping("/detail/{team_id}")
 	public ResponseEntity<Team> teamDetail(@PathVariable int team_id){
+		Team team = detailService.teamDetail(team_id);
+
+		System.out.println(team);
+		if(team == null) {
+			return new ResponseEntity<Team>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<Team>(team,HttpStatus.OK);
+	}
+	@GetMapping("/detail2")
+	public ResponseEntity<Team> teamDetail2(HttpSession session){
+		 User user = (User) session.getAttribute("loginUser");
+		 int team_id = user.getTeam_id();
 		Team team = detailService.teamDetail(team_id);
 
 		System.out.println(team);

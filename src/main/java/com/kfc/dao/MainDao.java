@@ -14,4 +14,6 @@ public interface MainDao {
 
 	List<Game> gameSand();
 
+	Game searchRecordOne();
+
 }
