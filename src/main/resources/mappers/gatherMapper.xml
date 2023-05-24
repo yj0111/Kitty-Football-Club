@@ -21,14 +21,14 @@
 
 	<select id="gatherList" parameterType="Gather"
 		resultType="Gather">
-		SELECT s.stadium_name, g.gather_date AS gather_date, COUNT(*) AS player_cnt, gather_announcement,g.gather_id ,t.team_logo
-		FROM gather g
-		JOIN stadium s ON g.stadium_id = s.stadium_id
-		JOIN player p ON p.gather_id = g.gather_id
-        JOIN team t on t.team_id = g.team_id
-		WHERE g.team_id = #{team_id}
-		AND DATE(g.gather_date) =DATE(#{gather_date})
-		GROUP BY gather_date, s.stadium_name;
+	    SELECT s.stadium_name, g.gather_date AS gather_date, COUNT(*) AS player_cnt, gather_announcement,g.gather_id ,t.team_logo
+	    FROM gather g
+	    JOIN stadium s ON g.stadium_id = s.stadium_id
+	    JOIN player p ON p.gather_id = g.gather_id
+	    JOIN team t on t.team_id = g.team_id
+	    WHERE g.team_id = #{team_id}
+	    AND DATE(g.gather_date) =DATE(#{gather_date})
+	    GROUP BY gather_date, s.stadium_name;
 	</select>
 
 	<select id="gatherOne" parameterType="int" resultType="Gather">

@@ -6,7 +6,7 @@
 	<select id="teamDetail" parameterType="int" resultType="Team">
 		SELECT ranking, score, team_id, team_name, team_win, team_lose, team_draw, team_announcement, total_cnt, team_logo
 		FROM (
-		    SELECT rank() OVER (ORDER BY score DESC) AS ranking, score, team_id, team_name, team_win, team_lose, team_draw, team_announcement, total_cnt, team_logo
+		    SELECT DENSE_RANK() OVER (ORDER BY score DESC) AS ranking, score, team_id, team_name, team_win, team_lose, team_draw, team_announcement, total_cnt, team_logo
 		    FROM (
 		        SELECT (team_win * 3 + team_draw + team_lose * (-3)) AS score, t.team_id, t.team_name, t.team_win, t.team_lose, t.team_draw, t.team_announcement, (SELECT COUNT(*) FROM user WHERE team_id = t.team_id) AS total_cnt, t.team_logo
 		        FROM team t
