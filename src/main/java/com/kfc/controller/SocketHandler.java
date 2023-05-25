@@ -21,6 +21,8 @@ public class SocketHandler {
         String userName = socketVO.getUserName();
         // vo에서 setter로 content를 가져옵니다.
         String content = socketVO.getContent();
+        System.out.println("내용이다 "+ content);
+        System.out.println("사진이다"+socketVO.getUser_pic());
         String user_pic = socketVO.getUser_pic();
         
 

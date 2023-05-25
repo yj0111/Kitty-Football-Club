@@ -14,7 +14,7 @@
 		JOIN Team t2 ON gd2.team_id = t2.team_id
         JOIN stadium s on s.stadium_id = gd1.stadium_id
 		WHERE g.game_status=1
-		ORDER BY gd1.gather_date desc
+		ORDER BY g.game_date asc
         limit 1
     </select>
 	

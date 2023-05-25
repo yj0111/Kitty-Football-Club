@@ -59,7 +59,7 @@ public class SecurityConfig {// 애가 필터 체인임
 		
 		http.csrf().disable(); //csrf 비활성화 하자
 		http.authorizeRequests() //여기에 들어가
-			.antMatchers("/team/createewewe" ,"/team/aaaa").authenticated() // 이주소로 가면 인증 필여해!!
+			.antMatchers("/team/create" ,"/teamDetail/detail2","/teamDetail/join/{team_id}" ).authenticated() // 이주소로 가면 인증 필여해!!
 			//.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')") 여기는 롤이 이거여야해!
 			//.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') and hasRole('ROLE_USER')")
 			//.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
