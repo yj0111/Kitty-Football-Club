@@ -62,6 +62,7 @@ public class TeamDetailController {
 	    System.out.println("팀아이디"+team_id);
 	    System.out.println("접속아이디"+user.getId());
 	    int result = detailService.JoinTeam(jointeam);
+	    user.setTeam_id(team_id);
 	    return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 
