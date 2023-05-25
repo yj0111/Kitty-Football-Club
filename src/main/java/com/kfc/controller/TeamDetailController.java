@@ -51,18 +51,19 @@ public class TeamDetailController {
 		return new ResponseEntity<Team>(team,HttpStatus.OK);
 	}
 	
-	@PostMapping("/join/{team_id}")
-	public ResponseEntity<Integer> joinTeam(@PathVariable int team_id, HttpSession session){
-		System.out.println("팀아이디!!!!!!!!!!!!!!!!!!!!!!!!!!!"+team_id);
-	    User user = (User) session.getAttribute("loginUser");
-	    Team jointeam = new Team();
-	    System.out.println("유저"+user);
-	    jointeam.setId(user.getId());
-	    jointeam.setTeam_id(team_id);
-	    System.out.println("팀아이디"+team_id);
-	    System.out.println("접속아이디"+user.getId());
-	    int result = detailService.JoinTeam(jointeam);
-	    return new ResponseEntity<>(result, HttpStatus.CREATED);
-	}
+	   @PostMapping("/join/{team_id}")
+	   public ResponseEntity<Integer> joinTeam(@PathVariable int team_id, HttpSession session){
+	      System.out.println("팀아이디!!!!!!!!!!!!!!!!!!!!!!!!!!!"+team_id);
+	       User user = (User) session.getAttribute("loginUser");
+	       Team jointeam = new Team();
+	       System.out.println("유저"+user);
+	       jointeam.setId(user.getId());
+	       jointeam.setTeam_id(team_id);
+	       System.out.println("팀아이디"+team_id);
+	       System.out.println("접속아이디"+user.getId());
+	       int result = detailService.JoinTeam(jointeam);
+	       user.setTeam_id(team_id);
+	       return new ResponseEntity<>(result, HttpStatus.CREATED);
+	   }
 
 }
