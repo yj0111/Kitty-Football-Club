@@ -30,6 +30,7 @@ public class TeamServiceImpl implements TeamService {
 			user.setTeam_id(tm.getTeam_id());
 			user.setUser_team_join_date(tm.getTeam_birth());
 			user.setUser_team_authority("운영자");
+			//위에꺼 까지만 해도 실제 session에있는 user가 수정됨!! 그래서 session에 수정된 애가 저장된다 신기하다
 //			session.removeAttribute("loginUser");
 //			session.setAttribute("loginUser", user);
 		} else {
@@ -96,9 +97,5 @@ public class TeamServiceImpl implements TeamService {
 		return teamDao.myteamRecord(id);
 	}
 
-	@Override
-	public Team getTeam() {
-		return teamDao.getTeam();
-	}
 
 }

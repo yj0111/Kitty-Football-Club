@@ -25,6 +25,6 @@ public interface TeamService {
 
 	List<Game> myteamRecord(int id);
 
-	Team getTeam();
+
 
 }

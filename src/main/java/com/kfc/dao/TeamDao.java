@@ -32,6 +32,5 @@ public interface TeamDao {
 
 	List<Team> teamRanking2();
 
-	Team getTeam();
 
 }

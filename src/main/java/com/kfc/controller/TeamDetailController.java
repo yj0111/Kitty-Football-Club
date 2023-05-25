@@ -1,6 +1,5 @@
 package com.kfc.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpServerErrorException;
 
 import com.kfc.dto.Team;
 import com.kfc.dto.User;
@@ -65,5 +63,6 @@ public class TeamDetailController {
 	       user.setTeam_id(team_id);
 	       return new ResponseEntity<>(result, HttpStatus.CREATED);
 	   }
+
 
 }
