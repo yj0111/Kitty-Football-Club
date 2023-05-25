@@ -6,17 +6,28 @@
 <mapper namespace="com.kfc.dao.MainDao">
     
     <select id="searchRecordOne"  resultType="Game">
-        SELECT t1.team_name AS team1_name, t2.team_name AS team2_name, g.team1_score, g.team2_score , DATE_FORMAT(g.game_date, '%y.%m.%d %H:%i') AS game_date , t1.team_logo as team1_logo , t2.team_logo as team2_logo,
-        stadium_name
-        FROM Game g
-        JOIN Gather gd1 ON g.game_team1 = gd1.gather_id
-        JOIN Gather gd2 ON g.game_team2 = gd2.gather_id
-        JOIN Team t1 ON gd1.team_id = t1.team_id
-        JOIN Team t2 ON gd2.team_id = t2.team_id
-        JOIN stadium s on s.stadium_id = gd1.stadium_id
-        WHERE g.game_status=1
-        ORDER BY g.game_date asc
-        limit 1
+		SELECT
+		  t1.team_name AS team1_name,
+		  t2.team_name AS team2_name,
+		  g.team1_score,
+		  g.team2_score,
+		  DATE_FORMAT(g.game_date, '%y.%m.%d %H:%i') AS game_date,
+		  t1.team_logo AS team1_logo,
+		  t2.team_logo AS team2_logo,
+		  stadium_name
+		FROM
+		  Game g
+		  JOIN Gather gd1 ON g.game_team1 = gd1.gather_id
+		  JOIN Gather gd2 ON g.game_team2 = gd2.gather_id
+		  JOIN Team t1 ON gd1.team_id = t1.team_id
+		  JOIN Team t2 ON gd2.team_id = t2.team_id
+		  JOIN stadium s ON s.stadium_id = gd1.stadium_id
+		WHERE
+		  g.game_status = 1
+		  AND g.game_date > NOW() -- Add this condition to filter game_date after the current time
+		ORDER BY
+		  g.game_date ASC
+		LIMIT 1;
     </select>
     
     <select id="searchRecord"  resultType="Game">
