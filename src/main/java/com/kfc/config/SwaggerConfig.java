@@ -25,8 +25,8 @@ public class SwaggerConfig {
 	
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
-				.title("현철 유정 ssafy 1학기 프로젝트")
-				.description("룰루랄라")
+				.title("현철 유정 SSAFY 1학기 프로젝트")
+				.description("Kitty-Football-Club")
 				.version("0.1")
 				.build();
 	}
