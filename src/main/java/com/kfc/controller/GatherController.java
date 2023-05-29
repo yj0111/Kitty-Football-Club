@@ -42,9 +42,7 @@ public class GatherController {
 	@PostMapping("/make")
 	public ResponseEntity<Integer> gather(@RequestBody Gather gather, HttpSession session) throws IOException {
 		User user = (User) session.getAttribute("loginUser");
-		System.out.println(user);
 		int team_id = user.getTeam_id();
-		System.out.println("팀 아이디 "+team_id);
 		gather.setTeam_id(team_id);
 		int result = gatherService.gather(gather,session);
 		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
@@ -53,22 +51,16 @@ public class GatherController {
 	// 우리팀 모집 공고 리스트
 	@GetMapping("/gatherList")
 	public ResponseEntity<?> gatherList(@RequestParam String year, @RequestParam String month, @RequestParam String date, HttpSession session) {
-		System.out.println("여기오냐???");
 		System.out.println(year + "//"+month);
 		System.out.println(session.getAttribute("loginUser"));
 		User user = (User) session.getAttribute("loginUser");
 		int team_id = user.getTeam_id();
-		System.out.println("내정보 " + user.toString());
-		System.out.println("팀 아이디는 :" + team_id);
-
 		Gather gather= new Gather();
 		gather.setTeam_id(team_id);
 		String setdate = year+"-"+month+"-"+date;
 		gather.setGather_date(setdate);
 
 		List<Gather> gatherList = gatherService.gatherList(gather);
-		System.out.println(gatherList);
-		System.out.println("gather"+gather);
 		if (gatherList == null) {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}

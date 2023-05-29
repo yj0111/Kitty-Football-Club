@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kfc.dto.Game;
-import com.kfc.dto.Team;
 import com.kfc.service.MainService;
 
 import io.swagger.annotations.Api;
-
 
 @RestController
 @RequestMapping("/main")

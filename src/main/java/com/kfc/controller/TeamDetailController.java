@@ -38,7 +38,6 @@ public class TeamDetailController {
 	@GetMapping("/detail2")
 	public ResponseEntity<Team> teamDetail2(HttpSession session){
 		 User user = (User) session.getAttribute("loginUser");
-		 System.out.println("detail2 team" + user);
 		 int team_id = user.getTeam_id();
 		Team team = detailService.teamDetail(team_id);
 
@@ -51,14 +50,10 @@ public class TeamDetailController {
 	
 	   @PostMapping("/join/{team_id}")
 	   public ResponseEntity<Integer> joinTeam(@PathVariable int team_id, HttpSession session){
-	      System.out.println("팀아이디!!!!!!!!!!!!!!!!!!!!!!!!!!!"+team_id);
 	       User user = (User) session.getAttribute("loginUser");
 	       Team jointeam = new Team();
-	       System.out.println("유저"+user);
 	       jointeam.setId(user.getId());
 	       jointeam.setTeam_id(team_id);
-	       System.out.println("팀아이디"+team_id);
-	       System.out.println("접속아이디"+user.getId());
 	       int result = detailService.JoinTeam(jointeam);
 	       user.setTeam_id(team_id);
 	       return new ResponseEntity<>(result, HttpStatus.CREATED);

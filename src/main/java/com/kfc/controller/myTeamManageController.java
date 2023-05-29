@@ -70,11 +70,7 @@ public class myTeamManageController {
 	@PutMapping("/modify") 
 	public ResponseEntity<?> modifyTeam(@RequestBody Team team , HttpSession session){
 		//로그인한 사용자가 속한 팀이면서 로그인한 사용자가 운영자 일 때만 변경 가능
-		System.out.println(team);
-		System.out.println(team.getTeam_id());
 		User user = (User) session.getAttribute("loginUser");
-		System.out.println(user.getUser_team_authority());
-		System.out.println(user.getTeam_id());
 		if(!user.getUser_team_authority().equals("운영자") || user.getTeam_id() != team.getTeam_id()) {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}

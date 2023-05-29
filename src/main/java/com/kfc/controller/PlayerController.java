@@ -48,15 +48,11 @@ public class PlayerController {
 		int result = playerService.applyGame(player);
 		int playerCnt = playerService.playerCnt(gather_id); //몇명이 신청했는지 
 		
-		System.out.println("현재 인원 : "+ playerCnt); //이사람이 신청 한 뒤 몇명인지?
-		
 		if(playerCnt == 11) {
 			Gather gather = gatherService.gatherOne(gather_id);
 			//경기장, 날짜 같은애 가져오기
-			
 			int answer= 0;
 			Gather status = gameService.findstatus(gather);
-			System.out.println(status);
 			if(status == null) {
 				System.out.println("qwqwqwqwqw");
 				Game game = new Game();
